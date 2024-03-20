@@ -7,6 +7,8 @@ class TrendingImage {
   final String rawUrl;
   final String altDescription;
 
+
+
   bool isFavorite;
 
   TrendingImage({
