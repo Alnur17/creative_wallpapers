@@ -58,7 +58,7 @@ class _ViewByCategoryState extends State<ViewByCategory> {
         toolbarHeight: 80,
         backgroundColor: background,
         elevation: 0,
-        title: Text(widget.value),
+        title: Text(widget.value,style: styleWB24,),
       ),
       body: Consumer<ImagesProvider>(
         builder: (context, imagesProvider, _) {
@@ -97,9 +97,12 @@ class _ViewByCategoryState extends State<ViewByCategory> {
                       ),
                     ),
                   ),
-                  child: CachedNetworkImage(
-                    imageUrl: imagesProvider.searchImage[index].thumbUrl,
-                    fit: BoxFit.cover,
+                  child: ClipRRect(
+                    borderRadius: BorderRadius.circular(16),
+                    child: CachedNetworkImage(
+                      imageUrl: imagesProvider.searchImage[index].thumbUrl,
+                      fit: BoxFit.cover,
+                    ),
                   ),
                 );
               },

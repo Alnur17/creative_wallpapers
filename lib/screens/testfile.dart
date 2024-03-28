@@ -3,7 +3,7 @@ import 'package:carousel_slider/carousel_slider.dart';
 import 'package:creative_wallpapers/constant/color_palate.dart';
 import 'package:flutter/material.dart';
 
-import '../data/dummy_data.dart';
+import '../data/all_data.dart';
 
 class FullscreenImage extends StatelessWidget {
   const FullscreenImage({

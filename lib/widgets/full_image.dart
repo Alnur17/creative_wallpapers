@@ -1,5 +1,6 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:creative_wallpapers/constant/color_palate.dart';
+import 'package:creative_wallpapers/data/all_data.dart';
 import 'package:creative_wallpapers/widgets/save_images.dart';
 import 'package:creative_wallpapers/widgets/shimmer_placeholder.dart';
 import 'package:flutter/material.dart';
@@ -16,13 +17,12 @@ class FullImage extends StatelessWidget {
 
   final String imageUrl;
   final String altDescription;
- final int likes;
+  final int likes;
   final int height;
   final int width;
 
   @override
   Widget build(BuildContext context) {
-    //final imagesProviders = Provider.of<ImagesProvider>(context, listen: false).fetchImages();
     return Scaffold(
       backgroundColor: background,
       // appBar: AppBar(
@@ -84,7 +84,7 @@ class FullImage extends StatelessWidget {
                   ),
                   GestureDetector(
                     onTap: () {
-                      _showBottomSheet(context, 'Set as Wallpaper');
+                      _setAsWallpaper(context);
                     },
                     child: const Icon(
                       Icons.now_wallpaper_rounded,
@@ -94,7 +94,7 @@ class FullImage extends StatelessWidget {
                   ),
                   GestureDetector(
                     onTap: () {
-                      _showBottomSheet(context, 'Add as Favorite');
+                      _imageDetails(context);
                     },
                     child: const Icon(
                       Icons.favorite_border_rounded,
@@ -104,7 +104,7 @@ class FullImage extends StatelessWidget {
                   ),
                   GestureDetector(
                     onTap: () {
-                      _showBottomSheet(context, 'Info');
+                      _imageDetails(context);
                     },
                     child: const Icon(
                       Icons.info_outlined,
@@ -121,7 +121,8 @@ class FullImage extends StatelessWidget {
     );
   }
 
-  void _showBottomSheet(BuildContext context, String action) {
+
+  void _setAsWallpaper(BuildContext context) {
     showModalBottomSheet(
       backgroundColor: matteBlack,
       shape: const RoundedRectangleBorder(
@@ -133,25 +134,81 @@ class FullImage extends StatelessWidget {
       context: context,
       builder: (BuildContext context) {
         return Container(
-          padding: const EdgeInsets.all(16),
+          height: 300,
+          padding: const EdgeInsets.all(30),
           child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            crossAxisAlignment: CrossAxisAlignment.start,
+
             children: [
               Text(
-                altDescription,
-                style: styleWB16,
+                capitalize(altDescription),
+                style: styleWB18,
+                maxLines: 2,
+                overflow: TextOverflow.ellipsis,
               ),
-              // Row(
-              //   children: [
-              //     Text('$height x $width'),
-              //     Text(likes),
-              //   ],
-              // ),
+              const SizedBox(height: 16),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Text('Resolution: $height x $width',style: styleWB16,),
+                  Text(
+                    'Likes: $likes',
+                    style: styleWB16,
+                  ),
+                ],
+              ),
+
             ],
           ),
         );
       },
     );
   }
+  void _imageDetails(BuildContext context) {
+    showModalBottomSheet(
+      backgroundColor: Colors.black54,
+      shape: const RoundedRectangleBorder(
+        borderRadius: BorderRadius.only(
+          topLeft: Radius.circular(30),
+          topRight: Radius.circular(30),
+        ),
+      ),
+      context: context,
+      builder: (BuildContext context) {
+        return Container(
+          height: 300,
+          padding: const EdgeInsets.all(30),
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            crossAxisAlignment: CrossAxisAlignment.start,
+
+            children: [
+              Text(
+                capitalize(altDescription),
+                style: styleWB18,
+                maxLines: 2,
+                overflow: TextOverflow.ellipsis,
+              ),
+              const SizedBox(height: 16),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Text('Resolution: ( $height x $width )',style: styleWB16,),
+                  Text(
+                    'Likes: $likes',
+                    style: styleWB16,
+                  ),
+                ],
+              ),
+
+            ],
+          ),
+        );
+      },
+    );
+  }
+
 }
 
 /*

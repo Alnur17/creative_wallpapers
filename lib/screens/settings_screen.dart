@@ -1,3 +1,4 @@
+import 'package:creative_wallpapers/constant/color_palate.dart';
 import 'package:flutter/material.dart';
 
 class SettingsScreen extends StatelessWidget {
@@ -7,8 +8,9 @@ class SettingsScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       //backgroundColor: Colors.black.withOpacity(0.1),
-      body: const Center(
-        child: Text('data'),
+      backgroundColor: background,
+      body: Column(
+        children: [],
       ),
     );
   }

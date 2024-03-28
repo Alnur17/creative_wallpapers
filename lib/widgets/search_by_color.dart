@@ -28,7 +28,7 @@ class SearchByColor extends StatelessWidget {
       child: Container(
         height: 150,
         width: 150,
-        margin: const EdgeInsets.only(left: 12),
+        margin: const EdgeInsets.only(left: 16),
         decoration: BoxDecoration(
           gradient: gradient,
           borderRadius: BorderRadius.circular(12),

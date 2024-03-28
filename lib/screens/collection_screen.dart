@@ -56,54 +56,68 @@ class _CollectionScreenState extends State<CollectionScreen> {
       backgroundColor: background,
       appBar: AppBar(
         elevation: 0,
-        toolbarHeight: 80,
+        toolbarHeight: 75,
         backgroundColor: background,
-        title: Text(widget.collectionName),
+        title: Text(
+          widget.collectionName,
+          style: Theme.of(context)
+              .textTheme
+              .titleLarge!
+              .copyWith(color: Theme.of(context).colorScheme.background),
+        ),
       ),
       body: Consumer<ImagesProvider>(
         builder: (context, imagesProviders, _) {
           if (imagesProviders.isLoading &&
               imagesProviders.collectionImage.isEmpty) {
             return buildShimmerPlaceholder();
-          } else if (imagesProviders.hasError && imagesProviders.images.isEmpty) {
+          } else if (imagesProviders.hasError &&
+              imagesProviders.images.isEmpty) {
             return Center(
               child: Text(
                 imagesProviders.errorMessage,
               ),
             );
           } else {
-            return GridView.builder(
-              gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-                crossAxisCount: 2, // Number of columns
-                mainAxisSpacing: 12, // Spacing between items vertically
-                crossAxisSpacing: 12, // Spacing between items horizontally
-                childAspectRatio: 0.75, // Aspect ratio of each item
-              ),
-              controller: _listController,
-              itemCount: imagesProviders.collectionImage.length,
-              itemBuilder: (context, index) {
-                return GestureDetector(
-                  onTap: () => Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                      builder: (context) => FullImage(
-                        imageUrl: imagesProviders.collectionImage[index].fullUrl,
-                        altDescription: imagesProviders.collectionImage[index].altDescription,
-                        likes: imagesProviders.collectionImage[index].likes,
-                        height: imagesProviders.collectionImage[index].height,
-                        width: imagesProviders.collectionImage[index].width,
+            return Padding(
+              padding: const EdgeInsets.only(left: 16,right: 16),
+              child: GridView.builder(
+                gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+                  crossAxisCount: 2, // Number of columns
+                  mainAxisSpacing: 12, // Spacing between items vertically
+                  crossAxisSpacing: 12, // Spacing between items horizontally
+                  childAspectRatio: 0.75, // Aspect ratio of each item
+                ),
+                controller: _listController,
+                itemCount: imagesProviders.collectionImage.length,
+                itemBuilder: (context, index) {
+                  return GestureDetector(
+                    onTap: () => Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => FullImage(
+                          imageUrl:
+                              imagesProviders.collectionImage[index].fullUrl,
+                          altDescription: imagesProviders.collectionImage[index].altDescription,
+                          likes: imagesProviders.collectionImage[index].likes,
+                          height: imagesProviders.collectionImage[index].height,
+                          width: imagesProviders.collectionImage[index].width,
+                        ),
                       ),
                     ),
-                  ),
-                  child: CachedNetworkImage(
-                    imageUrl: imagesProviders.collectionImage[index].thumbUrl,
-                    fit: BoxFit.cover,
-                    // placeholder: (context, url) => buildShimmerPlaceholder(),
-                    // errorWidget: (context, url, error) =>
-                    //     const Icon(Icons.error),
-                  ),
-                );
-              },
+                    child: ClipRRect(
+                      borderRadius: BorderRadius.circular(16),
+                      child: CachedNetworkImage(
+                        imageUrl: imagesProviders.collectionImage[index].thumbUrl,
+                        fit: BoxFit.cover,
+                        // placeholder: (context, url) => buildShimmerPlaceholder(),
+                        // errorWidget: (context, url, error) =>
+                        //     const Icon(Icons.error),
+                      ),
+                    ),
+                  );
+                },
+              ),
             );
           }
         },

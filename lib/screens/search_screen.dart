@@ -3,7 +3,7 @@ import 'package:creative_wallpapers/screens/view_by_category.dart';
 import 'package:creative_wallpapers/widgets/search_by_color.dart';
 import 'package:flutter/material.dart';
 
-import '../data/dummy_data.dart';
+import '../data/all_data.dart';
 import '../widgets/search_by_category.dart';
 
 class SearchScreen extends StatelessWidget {
@@ -21,7 +21,7 @@ class SearchScreen extends StatelessWidget {
           children: [
             Padding(
               padding: const EdgeInsets.only(
-                  left: 12, right: 12, top: 16, bottom: 16),
+                  left: 16, right: 16, top: 16, bottom: 16),
               child: ClipRRect(
                 borderRadius: BorderRadius.circular(30),
                 child: TextField(
@@ -35,9 +35,9 @@ class SearchScreen extends StatelessWidget {
                       fontWeight: FontWeight.bold,
                       color: searchFieldText,
                     ),
-                    hintText: 'Search by category, colors',
+                    hintText: 'Search here',
                     contentPadding: const EdgeInsets.symmetric(
-                        horizontal: 20, vertical: 20),
+                        horizontal: 25, vertical: 18),
                     suffixIcon: GestureDetector(
                       onTap: () {
                         Navigator.push(
@@ -48,11 +48,12 @@ class SearchScreen extends StatelessWidget {
                         );
                       },
                       child: const Padding(
-                        padding: EdgeInsets.all(20.0),
+                        padding: EdgeInsets.only(right: 25.0),
                         // Adjust icon padding as needed
                         child: Icon(
                           Icons.search_sharp,
-                          color: textWhite,size: 28,
+                          color: textWhite,
+                          size: 28,
                         ),
                       ),
                     ),
@@ -61,7 +62,7 @@ class SearchScreen extends StatelessWidget {
               ),
             ),
             Padding(
-              padding: const EdgeInsets.only(left: 12, right: 12, bottom: 16),
+              padding: const EdgeInsets.only(left: 16, right: 16, bottom: 16),
               child: RichText(
                 text: const TextSpan(
                   children: [
@@ -98,12 +99,11 @@ class SearchScreen extends StatelessWidget {
                         backImage: categoryImage[index],
                       );
                     } else {
-                      return const SizedBox(width: 12);
+                      return const SizedBox(width: 16);
                     }
                   },
                 ),
               ),
-
 
               // Alternatives are given below
 
@@ -119,8 +119,7 @@ class SearchScreen extends StatelessWidget {
               // ),),
             ),
             Padding(
-              padding: const EdgeInsets.only(
-                  left: 12, right: 12, top: 16, bottom: 16),
+              padding: const EdgeInsets.all(16),
               child: RichText(
                 text: const TextSpan(
                   children: [
@@ -151,11 +150,17 @@ class SearchScreen extends StatelessWidget {
                 padding: const EdgeInsets.only(right: 12),
                 child: Row(
                   children: List.generate(
-                    colorName.length,
-                    (index) => SearchByColor(
-                      colorName: colorName[index],
-                      gradient: colorGradients[index],
-                    ),
+                    colorName.length + 1,
+                    (index) {
+                      if (index < colorName.length) {
+                        return SearchByColor(
+                          colorName: colorName[index],
+                          gradient: colorGradients[index],
+                        );
+                      } else {
+                        return const SizedBox(width: 16);
+                      }
+                    },
                   ),
                 ),
               ),

@@ -3,12 +3,13 @@ import 'package:flutter/material.dart';
 const Color background = Color(0xFF343434);
 const Color textRed = Color(0xFFFF0000);
 const Color textWhite = Color(0xFFFFFFFF);
-const Color searchField =  Color(0x3DFFFFFF);
-const Color searchFieldText =  Color(0xB3FFFFFF);
-const Color matteBlack =  Color(0xFF28282B);
+const Color searchField = Color(0x3DFFFFFF);
+const Color searchFieldText = Color(0xB3FFFFFF);
+const Color matteBlack = Color(0xFF28282B);
 
 final Gradient darkGradient = LinearGradient(
-  colors: [matteBlack, Colors.grey[700]!], // Replace Colors.grey[900] with your desired end color
+  colors: [matteBlack, Colors.grey[700]!],
+  // Replace Colors.grey[900] with your desired end color
   begin: Alignment.bottomLeft,
   end: Alignment.topRight,
 );
@@ -44,7 +45,6 @@ const List<Gradient> colorGradients = [
     begin: Alignment.bottomLeft,
     end: Alignment.topRight,
   ),
-
   LinearGradient(
     colors: [Colors.black12, Colors.yellow],
     begin: Alignment.bottomLeft,
@@ -72,7 +72,6 @@ const List<Gradient> colorGradients = [
   ),
 ];
 
-
 const styleRB24 = TextStyle(
   //color: Color(0xffFFA500),
   color: textRed,
@@ -86,11 +85,14 @@ const styleWB24 = TextStyle(
   fontWeight: FontWeight.bold,
 );
 
-
 const styleWB16 = TextStyle(
   color: textWhite,
   fontSize: 16,
   fontWeight: FontWeight.bold,
 );
 
-
+const styleWB18 = TextStyle(
+  color: textWhite,
+  fontSize: 20,
+  fontWeight: FontWeight.bold,
+);

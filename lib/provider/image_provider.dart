@@ -13,7 +13,7 @@ class ImagesProvider with ChangeNotifier {
   List<CollectionImage> _collectionImage = [];
   List<TrendingImage> _searchImage = [];
 
-  List<CollectionImage> _searchImages = [];
+  final List<CollectionImage> _searchImages = [];
 
   bool _isLoadingAll = false;
   bool _isLoadingTrending = false;
@@ -25,7 +25,7 @@ class ImagesProvider with ChangeNotifier {
   bool _hasMoreDataSearch = true;
   String _errorMessage = '';
   int _currentPage = 1; // Track current page number
-  final int _perPage = 5;
+  final int _perPage = 30;
 
   List<ImageModel> get images => _images;
 
@@ -95,10 +95,11 @@ class ImagesProvider with ChangeNotifier {
         _currentPage++;
         _errorMessage = ''; // Reset error message
       } else {
+        print('else');
         _errorMessage = 'Failed to load images';
       }
     } catch (error) {
-      _errorMessage = 'Error: $error';
+      _errorMessage = 'This is a catch error: $error';
     } finally {
       _isLoadingAll = false;
       notifyListeners();
@@ -111,14 +112,15 @@ class ImagesProvider with ChangeNotifier {
 
   Future<void> fetchTrendingImages(String query) async {
     //print("fetchTrendingImages");
-    if (_isLoadingTrending || !_hasMoreDataTrending)
+    if (_isLoadingTrending || !_hasMoreDataTrending) {
       return; // Do not fetch if already fetching or no more data
+    }
     _isLoadingTrending = true;
     //notifyListeners();
 
     try {
       final response = await http.get(Uri.parse(
-          'https://api.unsplash.com/search/photos?query=$query&client_id=e8gVc5wKIVcSIihSoURU8f0t6vlbG_sNTAH-1Ypr08k&page=$_currentPage&per_page=$_perPage'));
+          'https://api.unsplash.com/search/photos?query=$query&client_id=RXHGOr2roQzdKvBe4ddPQdAdrO3vw2Qy2K8pIiB9OZw&page=$_currentPage&per_page=$_perPage'));
 
       if (response.statusCode == 200) {
         List<dynamic> data = json.decode(response.body)["results"];
@@ -158,7 +160,7 @@ class ImagesProvider with ChangeNotifier {
     try {
       final response = await http.get(
         Uri.parse(
-            'https://api.unsplash.com/search/collections?query=$query&client_id=e8gVc5wKIVcSIihSoURU8f0t6vlbG_sNTAH-1Ypr08k&page=$_currentPage&per_page=$_perPage'),
+            'https://api.unsplash.com/search/collections?query=$query&client_id=RXHGOr2roQzdKvBe4ddPQdAdrO3vw2Qy2K8pIiB9OZw&page=$_currentPage&per_page=$_perPage'),
       );
       if (response.statusCode == 200) {
         List<dynamic> data = json.decode(response.body)['results'];
@@ -178,13 +180,12 @@ class ImagesProvider with ChangeNotifier {
         _currentPage++;
         _errorMessage = ''; // Reset error message
       } else {
-        print('ELSE');
         _errorMessage = 'Failed to load images';
       }
     } catch (error) {
       _errorMessage = 'Error: $error';
-      print('Catch');
-      print(error);
+      // print('Catch');
+      // print(error);
     } finally {
       _isLoadingCollection = false;
       notifyListeners();
@@ -194,13 +195,13 @@ class ImagesProvider with ChangeNotifier {
   Future<void> fetchImagesByColor(String color) async {
     // _searchImage = [];
     // print("fetchImagesByColor");
-    // if (_isLoadingSearch || !_hasMoreDataSearch) return Text('data');
+    // if (_isLoadingSearch || !_hasMoreDataSearch) return;
     // _isLoadingSearch = true;
     // notifyListeners();
 
     try {
       final response = await http.get(Uri.parse(
-          'https://api.unsplash.com/search/photos?query=$color&client_id=e8gVc5wKIVcSIihSoURU8f0t6vlbG_sNTAH-1Ypr08k&page=$_currentPage&per_page=$_perPage'));
+          'https://api.unsplash.com/search/photos?query=$color&client_id=RXHGOr2roQzdKvBe4ddPQdAdrO3vw2Qy2K8pIiB9OZw&page=$_currentPage&per_page=$_perPage'));
       // print(response.statusCode);
       // print(response.body);
       if (response.statusCode == 200) {
@@ -226,6 +227,7 @@ class ImagesProvider with ChangeNotifier {
         _currentPage++;
         _errorMessage = ''; // Reset error message
       } else {
+
         _errorMessage = 'Failed to load images';
       }
     } catch (error) {

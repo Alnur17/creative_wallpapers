@@ -8,6 +8,7 @@ import 'package:creative_wallpapers/screens/settings_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
+import '../data/all_data.dart';
 import '../widgets/shimmer_placeholder.dart';
 
 class HomeScreen extends StatefulWidget {
@@ -46,17 +47,12 @@ class _HomeScreenState extends State<HomeScreen> {
     }
   }
 
-  String capitalize(String input) {
-    if (input.isEmpty) return input;
-    return input[0].toUpperCase() + input.substring(1);
-  }
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: background,
       appBar: AppBar(
-        toolbarHeight: 80,
+        toolbarHeight: 75,
         backgroundColor: background,
         elevation: 0,
         title: Row(
@@ -180,23 +176,23 @@ class _HomeScreenState extends State<HomeScreen> {
                   ),*/
                   const SizedBox(height: 12),
                   CarouselSlider(
-                    items: provider.images.asMap().entries.map((entry) {
+                    items: provider.images.map((entry) {
                       return Stack(
                         alignment: Alignment.bottomCenter,
                         children: [
                           ClipRRect(
-                            borderRadius: BorderRadius.circular(30),
+                            borderRadius: BorderRadius.circular(16),
                             child: GestureDetector(
                               onTap: () {
                                 Navigator.push(
                                   context,
                                   MaterialPageRoute(
                                     builder: (context) => FullImage(
-                                      imageUrl: entry.value.fullUrl,
-                                      altDescription: entry.value.altDescription,
-                                     likes: entry.value.likes,
-                                      height: entry.value.height,
-                                      width: entry.value.width,
+                                      imageUrl: entry.fullUrl,
+                                      altDescription: entry.altDescription,
+                                     likes: entry.likes,
+                                      height: entry.height,
+                                      width: entry.width,
                                       //altHeader: entry.value.altDescription,
 
                                       //index: entry.key,
@@ -205,7 +201,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                 );
                               },
                               child: CachedNetworkImage(
-                                imageUrl: entry.value.thumbUrl,
+                                imageUrl: entry.thumbUrl,
                                 placeholder: (context, url) =>
                                     buildShimmerPlaceholder(),
                                 // placeholder: (context, url) => const Center(
@@ -228,13 +224,13 @@ class _HomeScreenState extends State<HomeScreen> {
                             ),
                             decoration: const BoxDecoration(
                               borderRadius: BorderRadius.only(
-                                bottomLeft: Radius.circular(30),
-                                bottomRight: Radius.circular(30),
+                                bottomLeft: Radius.circular(16),
+                                bottomRight: Radius.circular(16),
                               ),
                               color: Colors.black54,
                             ),
                             child: Text(
-                              capitalize(entry.value.altDescription),
+                              capitalize(entry.altDescription),
                               style: const TextStyle(
                                 color: textWhite,
                                 fontSize: 16,
@@ -253,7 +249,7 @@ class _HomeScreenState extends State<HomeScreen> {
                       aspectRatio: 20 / 9,
                       enlargeCenterPage: true,
                       disableCenter: true,
-                      initialPage: 2,
+                      initialPage: 0,
                     ),
                   ),
                   Padding(
@@ -292,7 +288,7 @@ class _HomeScreenState extends State<HomeScreen> {
                             children: [
                               Positioned.fill(
                                 child: ClipRRect(
-                                  borderRadius: BorderRadius.circular(30),
+                                  borderRadius: BorderRadius.circular(16),
                                   child: CachedNetworkImage(
                                     imageUrl: image.thumbUrl,
                                     placeholder: (context, url) =>
@@ -317,7 +313,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                     height: 40,
                                     width: 40,
                                     decoration: BoxDecoration(
-                                      borderRadius: BorderRadius.circular(30),
+                                      borderRadius: BorderRadius.circular(20),
                                       color: Colors.black.withOpacity(0.5),
                                     ),
                                     child: Icon(
