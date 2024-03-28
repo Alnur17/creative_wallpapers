@@ -1,5 +1,6 @@
 
 import 'package:creative_wallpapers/provider/image_provider.dart';
+import 'package:creative_wallpapers/screens/collections.dart';
 import 'package:creative_wallpapers/screens/tab_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -34,7 +35,7 @@ class MyApp extends StatelessWidget {
         title: 'Creative Wallpaper',
         debugShowCheckedModeBanner: false,
         theme: theme,
-        home:   const TabsScreen(),
+        home:  const TabsScreen(),
       ),
     );
   }

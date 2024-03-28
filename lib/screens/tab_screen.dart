@@ -1,11 +1,8 @@
-import 'dart:ui';
-
-import 'package:creative_wallpapers/screens/collection_screen.dart';
 import 'package:creative_wallpapers/constant/color_palate.dart';
+import 'package:creative_wallpapers/screens/collections.dart';
 import 'package:creative_wallpapers/screens/favorite_screen.dart';
 import 'package:creative_wallpapers/screens/home_screen.dart';
 import 'package:creative_wallpapers/screens/trending_screen.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -30,7 +27,7 @@ class _TabsScreenState extends State<TabsScreen> {
   final List<Widget> _screens = [
     const HomeScreen(),
     const TrendingScreen(),
-    const CollectionScreen(),
+    const Collections(),
     const FavoriteScreen(),
   ];
 
@@ -43,9 +40,7 @@ class _TabsScreenState extends State<TabsScreen> {
   initializeData() async {
     await Provider.of<ImagesProvider>(context, listen: false).fetchImages();
     await Provider.of<ImagesProvider>(context, listen: false)
-        .fetchTrendingImages('popular');
-    await Provider.of<ImagesProvider>(context, listen: false)
-        .fetchCollectionImages('bird');
+        .fetchTrendingImages('trending');
   }
 
   @override
@@ -77,7 +72,7 @@ class _TabsScreenState extends State<TabsScreen> {
             alignment: const Alignment(0.0, 1.0),
             child: Container(
               height: 65,
-              margin: const EdgeInsets.only(left: 12, right: 12, bottom: 12),
+              margin: const EdgeInsets.only(left: 16, right: 16, bottom: 16),
               child: ClipRRect(
                 borderRadius: BorderRadius.circular(30),
                 child: BottomNavigationBar(

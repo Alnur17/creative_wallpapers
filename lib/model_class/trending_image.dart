@@ -6,12 +6,12 @@ class TrendingImage {
   final String regularUrl;
   final String rawUrl;
   final String altDescription;
-
-
+  final String color;
 
   bool isFavorite;
 
   TrendingImage({
+    required this.color,
     required this.id,
     required this.thumbUrl,
     required this.fullUrl,
@@ -25,13 +25,14 @@ class TrendingImage {
   factory TrendingImage.fromJson(Map<String, dynamic> json) {
     return TrendingImage(
       id: json['id'],
+      color: json['color'],
       thumbUrl: json['urls']['thumb'],
       fullUrl: json['urls']['full'],
       rawUrl: json['urls']['raw'],
       smallUrl: json['urls']['small'],
       regularUrl: json['urls']['regular'],
-      altDescription: json['alt_description'] ??
-          'No altered description available',
+      altDescription:
+          json['alt_description'] ?? 'No altered description available',
     );
   }
 }

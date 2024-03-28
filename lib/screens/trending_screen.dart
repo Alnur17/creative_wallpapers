@@ -1,4 +1,3 @@
-
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:creative_wallpapers/constant/color_palate.dart';
 import 'package:creative_wallpapers/widgets/save_images.dart';
@@ -6,7 +5,7 @@ import 'package:creative_wallpapers/widgets/shimmer_placeholder.dart';
 import 'package:flutter/material.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:provider/provider.dart';
-import 'package:creative_wallpapers/model_class/trending_model.dart';
+import 'package:creative_wallpapers/model_class/trending_image.dart';
 
 import '../provider/image_provider.dart';
 
@@ -19,6 +18,30 @@ class TrendingScreen extends StatefulWidget {
 
 class _TrendingScreenState extends State<TrendingScreen> {
   int _currentImageIndex = 0;
+
+
+  // final ScrollController _scrollController = ScrollController();
+  //
+  // @override
+  // void initState() {
+  //   super.initState();
+  //   _scrollController.addListener(_scrollListener);
+  //   Provider.of<ImagesProvider>(context, listen: false).fetchTrendingImages('');
+  // }
+  //
+  // @override
+  // void dispose() {
+  //   _scrollController.dispose();
+  //   super.dispose();
+  // }
+  //
+  // void _scrollListener() {
+  //   if (_scrollController.position.pixels ==
+  //       _scrollController.position.maxScrollExtent) {
+  //     Provider.of<ImagesProvider>(context, listen: false)
+  //         .fetchTrendingImages('');
+  //   }
+  // }
 
   @override
   Widget build(BuildContext context) {
@@ -40,29 +63,34 @@ class _TrendingScreenState extends State<TrendingScreen> {
                       : CarouselSlider.builder(
                           itemCount: imagesProvider.trendImage.length,
                           options: CarouselOptions(
-                            height: MediaQuery.of(context).size.height,
-
+                            //height: MediaQuery.of(context).size.height,
+                            scrollDirection: Axis.vertical,
                             autoPlay: false,
-                            //enlargeCenterPage: true,
-                            viewportFraction: 0.95,
+                            padEnds: true,
+                            viewportFraction: 1,
+                            initialPage: _currentImageIndex,
                             onPageChanged: (index, reason) {
                               setState(() {
                                 _currentImageIndex = index;
                               });
+                              if (
+                                  index == imagesProvider.trendImage.length - 1) {
+                                // Load more data
+                                imagesProvider.fetchTrendingImages('trending');
+
+                              }
                             },
                           ),
                           itemBuilder: (context, index, realIndex) {
                             TrendingImage image =
                                 imagesProvider.trendImage[index];
-                            return Padding(
-                              padding:
-                                  const EdgeInsets.symmetric(horizontal: 4),
-                              child: CachedNetworkImage(
-                                imageUrl: image.regularUrl,
-                                fit: BoxFit.fill,
-                                placeholder: (context, url) =>
-                                    buildShimmerPlaceholder(),
-                              ),
+                            return CachedNetworkImage(
+                              height: double.maxFinite,
+                              width: double.maxFinite,
+                              imageUrl: image.regularUrl,
+                              fit: BoxFit.contain,
+                              placeholder: (context, url) =>
+                                  buildShimmerPlaceholder(),
                             );
                           },
                         ),
@@ -104,8 +132,8 @@ class _TrendingScreenState extends State<TrendingScreen> {
                       children: [
                         GestureDetector(
                           onTap: () {
-
-                            String imageUrl =  imagesProvider.trendImage[_currentImageIndex].regularUrl;
+                            String imageUrl = imagesProvider
+                                .trendImage[_currentImageIndex].regularUrl;
                             SaveToDevice.saveImage(context, imageUrl);
                           },
                           child: const Icon(
@@ -132,10 +160,8 @@ class _TrendingScreenState extends State<TrendingScreen> {
     );
   }
 
-  // Function to build shimmer effect
-
+// Function to build shimmer effect
 }
-
 
 /*
 import 'package:creative_wallpapers/constant/color_palate.dart';
@@ -145,7 +171,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import '../provider/image_provider.dart';
-import '../model_class/trending_model.dart';
+import '../model_class/trending_image.dart';
 
 class TrendingScreen extends StatefulWidget {
   const TrendingScreen({super.key});
@@ -302,7 +328,6 @@ class _TrendingScreenState extends State<TrendingScreen> {
   }
 }
 */
-
 
 /*Scaffold(
       appBar: AppBar(

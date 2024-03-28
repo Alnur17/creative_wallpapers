@@ -1,14 +1,20 @@
-class UnsplashImage {
+class ImageModel {
   final String thumbUrl;
   final String fullUrl;
   final String smallUrl;
   final String regularUrl;
   final String rawUrl;
   final String altDescription;
+  final String height;
+  final String width;
+  final String likes;
 
   bool isFavorite;
 
-  UnsplashImage({
+  ImageModel({
+    required this.height,
+    required this.width,
+    required this.likes,
     required this.thumbUrl,
     required this.fullUrl,
     required this.smallUrl,
@@ -18,8 +24,8 @@ class UnsplashImage {
     this.isFavorite = false,
   });
 
-  factory UnsplashImage.fromJson(Map<String, dynamic> json) {
-    return UnsplashImage(
+  factory ImageModel.fromJson(Map<String, dynamic> json) {
+    return ImageModel(
       thumbUrl: json['urls']['thumb'],
       fullUrl: json['urls']['full'],
       rawUrl: json['urls']['raw'],
@@ -27,8 +33,9 @@ class UnsplashImage {
       regularUrl: json['urls']['regular'],
       altDescription:
           json['alt_description'] ?? 'No altered description available',
+      height: json['height'],
+      width: json['width'],
+      likes: json['likes'],
     );
   }
 }
-
-

@@ -1,44 +1,57 @@
-import 'package:creative_wallpapers/model_class/trending_model.dart';
+import 'package:creative_wallpapers/model_class/collection_image.dart';
+import 'package:creative_wallpapers/model_class/image_model.dart';
+import 'package:creative_wallpapers/model_class/trending_image.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
 
-import '../model_class/image_model.dart';
+
 
 class ImagesProvider with ChangeNotifier {
-
-
-  List<UnsplashImage> _images = [];
+  List<ImageModel> _images = [];
   List<TrendingImage> _trendImage = [];
-  List<TrendingImage> _collectionImage = [];
+  List<CollectionImage> _collectionImage = [];
+  List<TrendingImage> _searchImage = [];
 
+  List<CollectionImage> _searchImages = [];
 
   bool _isLoadingAll = false;
   bool _isLoadingTrending = false;
   bool _isLoadingCollection = false;
+  bool _isLoadingSearch = false;
   bool _hasMoreDataAll = true;
   bool _hasMoreDataTrending = true;
   bool _hasMoreDataCollection = true;
+  bool _hasMoreDataSearch = true;
   String _errorMessage = '';
   int _currentPage = 1; // Track current page number
-  final int _perPage = 30;
+  final int _perPage = 5;
 
-  List<UnsplashImage> get images => _images;
+  List<ImageModel> get images => _images;
+
   List<TrendingImage> get trendImage => _trendImage;
-  List<TrendingImage> get collectionImage => _collectionImage;
+
+  List<CollectionImage> get collectionImage => _collectionImage;
+
+  List<TrendingImage> get searchImage => _searchImage;
 
   bool get isLoading => _isLoadingAll;
+
   bool get isLoadingTrending => _isLoadingTrending;
+
   bool get isLoadingCollection => _isLoadingCollection;
+
+  bool get isLoadingSearch => _isLoadingSearch;
 
   bool get hasError => _errorMessage.isNotEmpty;
 
   String get errorMessage => _errorMessage;
 
   bool get hasMoreDataAll => _hasMoreDataAll;
-  bool get hasMoreDataCollection => _hasMoreDataCollection;
-  bool get hasMoreDataTrending => _hasMoreDataTrending;
 
+  bool get hasMoreDataCollection => _hasMoreDataCollection;
+
+  bool get hasMoreDataTrending => _hasMoreDataTrending;
 
   void toggleFavorite(int index) {
     _images[index].isFavorite = !_images[index].isFavorite;
@@ -50,24 +63,25 @@ class ImagesProvider with ChangeNotifier {
     notifyListeners();
   }
 
-  void toggleFavoriteCollections(int index) {
-    _collectionImage[index].isFavorite = !_collectionImage[index].isFavorite;
-    notifyListeners();
-  }
+  // void toggleFavoriteCollections(int index) {
+  //   _collectionImage[index].isFavorite = !_collectionImage[index].isFavorite;
+  //   notifyListeners();
+  // }
 
   Future<void> fetchImages() async {
-    if (_isLoadingAll || !_hasMoreDataAll) return; // Do not fetch if already fetching or no more data
+    if (_isLoadingAll || !_hasMoreDataAll)
+      return;
     _isLoadingAll = true;
     // notifyListeners();
 
     try {
       final response = await http.get(Uri.parse(
-          'https://api.unsplash.com/photos/?client_id=RXHGOr2roQzdKvBe4ddPQdAdrO3vw2Qy2K8pIiB9OZw&page=$_currentPage&per_page=$_perPage'));
+          'https://api.unsplash.com/photos/?client_id=e8gVc5wKIVcSIihSoURU8f0t6vlbG_sNTAH-1Ypr08k&page=$_currentPage&per_page=$_perPage'));
 
       if (response.statusCode == 200) {
         List<dynamic> data = json.decode(response.body);
-        List<UnsplashImage> newImages =
-        data.map((json) => UnsplashImage.fromJson(json)).toList();
+        List<ImageModel> newImages =
+            data.map((json) => ImageModel.fromJson(json)).toList();
 
         if (_currentPage == 1) {
           _images = newImages;
@@ -98,25 +112,26 @@ class ImagesProvider with ChangeNotifier {
 
   Future<void> fetchTrendingImages(String query) async {
     //print("fetchTrendingImages");
-    if (_isLoadingTrending || !_hasMoreDataTrending) return; // Do not fetch if already fetching or no more data
+    if (_isLoadingTrending || !_hasMoreDataTrending)
+      return; // Do not fetch if already fetching or no more data
     _isLoadingTrending = true;
-    notifyListeners();
+    //notifyListeners();
 
     try {
       final response = await http.get(Uri.parse(
-          'https://api.unsplash.com/search/photos?query=${query}&client_id=RXHGOr2roQzdKvBe4ddPQdAdrO3vw2Qy2K8pIiB9OZw&page=$_currentPage&per_page=$_perPage'));
+          'https://api.unsplash.com/search/photos?query=$query&client_id=e8gVc5wKIVcSIihSoURU8f0t6vlbG_sNTAH-1Ypr08k&page=$_currentPage&per_page=$_perPage'));
 
       if (response.statusCode == 200) {
         List<dynamic> data = json.decode(response.body)["results"];
         List<TrendingImage> newImage =
-        data.map((json) => TrendingImage.fromJson(json)).toList();
+            data.map((json) => TrendingImage.fromJson(json)).toList();
 
         if (_currentPage == 1) {
           _trendImage = newImage;
         } else {
           _trendImage.addAll(newImage);
         }
-       // print("_trendImage - ${_trendImage.length}");
+        // print("_trendImage - ${_trendImage.length}");
 
         if (data.length < _perPage) {
           _hasMoreDataTrending = false; // No more data available
@@ -135,25 +150,25 @@ class ImagesProvider with ChangeNotifier {
       notifyListeners();
     }
   }
+
   Future<void> fetchCollectionImages(String query) async {
-    //print("fetchCollectionImages");
-    if (_isLoadingCollection || !_hasMoreDataCollection) return; // Do not fetch if already fetching or no more data
+    print("fetchCollectionImages");
+    if (_isLoadingCollection || !_hasMoreDataCollection) return;
     _isLoadingCollection = true;
-    notifyListeners();
+    //notifyListeners();
 
     try {
-      final response = await http.get(Uri.parse(
-          'https://api.unsplash.com/search/photos?query=${query}&client_id=RXHGOr2roQzdKvBe4ddPQdAdrO3vw2Qy2K8pIiB9OZw&page=$_currentPage&per_page=$_perPage'));
-
+      final response = await http.get(
+        Uri.parse(
+            'https://api.unsplash.com/search/collections?query=$query&client_id=e8gVc5wKIVcSIihSoURU8f0t6vlbG_sNTAH-1Ypr08k&page=$_currentPage&per_page=$_perPage'),
+      );
       if (response.statusCode == 200) {
-        List<dynamic> data = json.decode(response.body)["results"];
-        List<TrendingImage> newImage =
-        data.map((json) => TrendingImage.fromJson(json)).toList();
-
+        List<dynamic> data = json.decode(response.body)['results'];
+        List<CollectionImage> colImage = data.map((json) => CollectionImage.fromJson(json)).toList();
         if (_currentPage == 1) {
-          _collectionImage = newImage;
+          _collectionImage = colImage;
         } else {
-          _collectionImage.addAll(newImage);
+          _collectionImage.addAll(colImage);
         }
 
         //print("_collectionImage - ${_collectionImage.length}");
@@ -165,24 +180,80 @@ class ImagesProvider with ChangeNotifier {
         _currentPage++;
         _errorMessage = ''; // Reset error message
       } else {
+        print('ELSE');
         _errorMessage = 'Failed to load images';
       }
     } catch (error) {
       _errorMessage = 'Error: $error';
+      print('Catch');
+      print(error.toString());
     } finally {
       _isLoadingCollection = false;
       notifyListeners();
     }
   }
-  // Future<void> loadMoreImage() async {
-  //   await fetchSearchedImages('peacock');
-  // }
 
-  // Future<void> loadsMoreImage() async {
-  //   await fetchSearchedImages('bird');
-  // }
+  Future<void> fetchImagesByColor(String color) async {
+    // _searchImage = [];
+    // print("fetchImagesByColor");
+    // if (_isLoadingSearch || !_hasMoreDataSearch) return Text('data');
+    // _isLoadingSearch = true;
+    // notifyListeners();
+
+    try {
+      final response = await http.get(Uri.parse(
+          'https://api.unsplash.com/search/photos?query=$color&client_id=e8gVc5wKIVcSIihSoURU8f0t6vlbG_sNTAH-1Ypr08k&page=$_currentPage&per_page=$_perPage'));
+      // print(response.statusCode);
+      // print(response.body);
+      if (response.statusCode == 200) {
+        List<dynamic> data = json.decode(response.body)["results"];
+
+        if (data.isNotEmpty) { // Only update if data is not empty
+          List<TrendingImage> newImage =
+          data.map((json) => TrendingImage.fromJson(json)).toList();
+
+          if (_currentPage == 1) {
+            _searchImage = newImage;
+          } else {
+            _searchImage.addAll(newImage);
+          }
+        }
+
+        //print("_collectionImage - ${_collectionImage.length}");
+
+        if (data.length < _perPage) {
+          _hasMoreDataSearch = false; // No more data available
+        }
+
+        _currentPage++;
+        _errorMessage = ''; // Reset error message
+      } else {
+        _errorMessage = 'Failed to load images';
+      }
+    } catch (error) {
+      _errorMessage = 'Error: $error';
+    } finally {
+      _isLoadingSearch = false;
+      notifyListeners();
+    }
+  }
 
 
+  clearColorSearch() async {
+    _searchImage.clear();
+  }
+
+  clearSearch() async {
+    _searchImages.clear();
+
+  }
 
 
+// Future<void> loadMoreImage() async {
+//   await fetchSearchedImages('peacock');
+// }
+
+// Future<void> loadsMoreImage() async {
+//   await fetchSearchedImages('bird');
+// }
 }

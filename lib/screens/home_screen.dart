@@ -57,6 +57,7 @@ class _HomeScreenState extends State<HomeScreen> {
     return Scaffold(
       backgroundColor: background,
       appBar: AppBar(
+        toolbarHeight: 80,
         backgroundColor: background,
         elevation: 0,
         title: Row(
@@ -94,7 +95,7 @@ class _HomeScreenState extends State<HomeScreen> {
                 Navigator.push(
                     context,
                     MaterialPageRoute(
-                      builder: (context) => CategoryScreen(),
+                      builder: (context) => SearchScreen(),
                     ));
               },
               child: const Icon(
@@ -192,8 +193,8 @@ class _HomeScreenState extends State<HomeScreen> {
                                   context,
                                   MaterialPageRoute(
                                     builder: (context) => FullImage(
-                                      imageUrl: entry.value.regularUrl,
-                                      altHeader: entry.value.altDescription,
+                                      image: provider.images[0],
+                                      //altHeader: entry.value.altDescription,
 
                                       //index: entry.key,
                                     ),
@@ -202,12 +203,13 @@ class _HomeScreenState extends State<HomeScreen> {
                               },
                               child: CachedNetworkImage(
                                 imageUrl: entry.value.thumbUrl,
-                                placeholder: (context, url) => buildShimmerPlaceholder(),
+                                placeholder: (context, url) =>
+                                    buildShimmerPlaceholder(),
                                 // placeholder: (context, url) => const Center(
                                 //     child: CircularProgressIndicator()),
                                 errorWidget: (context, url, error) =>
                                     const Icon(Icons.error),
-                                fit: BoxFit.fill,
+                                fit: BoxFit.cover,
                                 height: 200,
                                 width: double.infinity,
                               ),
@@ -252,7 +254,7 @@ class _HomeScreenState extends State<HomeScreen> {
                     ),
                   ),
                   Padding(
-                    padding: const EdgeInsets.all(12),
+                    padding: const EdgeInsets.all(16),
                     child: GridView.builder(
                       primary: false,
                       shrinkWrap: true,
@@ -273,9 +275,7 @@ class _HomeScreenState extends State<HomeScreen> {
                               context,
                               MaterialPageRoute(
                                 builder: (context) => FullImage(
-                                  imageUrl: image.fullUrl,
-                                  altHeader: image.altDescription,
-                                  //index: index,
+                                  image: image,
                                 ),
                               ),
                             );
@@ -287,7 +287,8 @@ class _HomeScreenState extends State<HomeScreen> {
                                   borderRadius: BorderRadius.circular(30),
                                   child: CachedNetworkImage(
                                     imageUrl: image.thumbUrl,
-                                    placeholder: (context, url) => buildShimmerPlaceholder(),
+                                    placeholder: (context, url) =>
+                                        buildShimmerPlaceholder(),
                                     // placeholder: (context, url) => const Center(
                                     //     child: CircularProgressIndicator()),
                                     errorWidget: (context, url, error) =>
@@ -329,7 +330,7 @@ class _HomeScreenState extends State<HomeScreen> {
                     ),
                   ),
                   if (provider.isLoading && provider.hasMoreDataAll)
-                       buildShimmerPlaceholder(),
+                    buildShimmerPlaceholder(),
                   if (provider.hasError && provider.hasMoreDataAll)
                     Center(child: Text('Error: ${provider.errorMessage}')),
                 ],
@@ -340,8 +341,6 @@ class _HomeScreenState extends State<HomeScreen> {
       ),
     );
   }
-
-
 }
 
 /*SingleChildScrollView(

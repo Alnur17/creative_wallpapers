@@ -1,20 +1,15 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:creative_wallpapers/constant/color_palate.dart';
-import 'package:creative_wallpapers/data/dummy_data.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
+
+import '../data/dummy_data.dart';
 
 class FullscreenImage extends StatelessWidget {
-  FullscreenImage({
+  const FullscreenImage({
     super.key,
     //required this.imageUrl
   });
-
-  //final String imageUrl;
-
-  //double height = 600;
 
   @override
   Widget build(BuildContext context) {
@@ -71,7 +66,7 @@ class FullscreenImage extends StatelessWidget {
                   enlargeCenterPage: false,
                   // autoPlay: false,
                 ),
-                items: imageItems
+                items: collectionBackgroundImage
                     .map((item) =>
                     Container(
                       padding: const EdgeInsets.all(8),
