@@ -89,7 +89,11 @@ class _ViewByCategoryState extends State<ViewByCategory> {
                     context,
                     MaterialPageRoute(
                       builder: (context) => FullImage(
-                        imageUrl: imagesProvider.searchImage[index].regularUrl,
+                        imageUrl: imagesProvider.searchImage[index].fullUrl,
+                        altDescription: imagesProvider.searchImage[index].altDescription,
+                        likes: imagesProvider.searchImage[index].likes,
+                        height: imagesProvider.searchImage[index].height,
+                        width: imagesProvider.searchImage[index].width,
                       ),
                     ),
                   ),

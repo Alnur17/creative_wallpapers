@@ -1,20 +1,24 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:creative_wallpapers/constant/color_palate.dart';
-import 'package:creative_wallpapers/model_class/image_model.dart';
 import 'package:creative_wallpapers/widgets/save_images.dart';
 import 'package:creative_wallpapers/widgets/shimmer_placeholder.dart';
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
-
-import '../provider/image_provider.dart';
 
 class FullImage extends StatelessWidget {
-   FullImage({
+  const FullImage({
     super.key,
-    required this.image,
+    required this.imageUrl,
+    required this.altDescription,
+    required this.likes,
+    required this.height,
+    required this.width,
   });
 
-  ImageModel image;
+  final String imageUrl;
+  final String altDescription;
+ final int likes;
+  final int height;
+  final int width;
 
   @override
   Widget build(BuildContext context) {
@@ -45,7 +49,7 @@ class FullImage extends StatelessWidget {
           // Fullscreen Image
           Positioned.fill(
             child: CachedNetworkImage(
-              imageUrl: image.regularUrl,
+              imageUrl: imageUrl,
               placeholder: (context, url) => buildShimmerPlaceholder(),
               // placeholder: (context, url) =>
               //     const Center(child: CircularProgressIndicator()),
@@ -70,7 +74,7 @@ class FullImage extends StatelessWidget {
                 children: [
                   GestureDetector(
                     onTap: () {
-                      SaveToDevice.saveImage(context, image.fullUrl);
+                      SaveToDevice.saveImage(context, imageUrl);
                     },
                     child: const Icon(
                       Icons.downloading_sharp,
@@ -132,13 +136,16 @@ class FullImage extends StatelessWidget {
           padding: const EdgeInsets.all(16),
           child: Column(
             children: [
-              Text(image.altDescription,style: styleWB16,),
-              Row(
-                children: [
-                  Text('${image.height} x ${image.width}'),
-                  Text(image.likes),
-                ],
+              Text(
+                altDescription,
+                style: styleWB16,
               ),
+              // Row(
+              //   children: [
+              //     Text('$height x $width'),
+              //     Text(likes),
+              //   ],
+              // ),
             ],
           ),
         );

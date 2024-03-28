@@ -7,10 +7,16 @@ class TrendingImage {
   final String rawUrl;
   final String altDescription;
   final String color;
+  final int height;
+  final int width;
+  final int likes;
 
   bool isFavorite;
 
   TrendingImage({
+    required this.height,
+    required this.width,
+    required this.likes,
     required this.color,
     required this.id,
     required this.thumbUrl,
@@ -33,6 +39,9 @@ class TrendingImage {
       regularUrl: json['urls']['regular'],
       altDescription:
           json['alt_description'] ?? 'No altered description available',
+      height: json['height'] ?? 0, // Parse as int
+      width: json['width'] ?? 0,
+      likes: json['likes'] ?? 0,
     );
   }
 }

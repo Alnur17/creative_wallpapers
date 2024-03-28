@@ -7,7 +7,6 @@ import 'package:creative_wallpapers/provider/image_provider.dart';
 import 'package:creative_wallpapers/screens/settings_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:shimmer/shimmer.dart';
 
 import '../widgets/shimmer_placeholder.dart';
 
@@ -95,7 +94,7 @@ class _HomeScreenState extends State<HomeScreen> {
                 Navigator.push(
                     context,
                     MaterialPageRoute(
-                      builder: (context) => SearchScreen(),
+                      builder: (context) => const SearchScreen(),
                     ));
               },
               child: const Icon(
@@ -193,7 +192,11 @@ class _HomeScreenState extends State<HomeScreen> {
                                   context,
                                   MaterialPageRoute(
                                     builder: (context) => FullImage(
-                                      image: provider.images[0],
+                                      imageUrl: entry.value.fullUrl,
+                                      altDescription: entry.value.altDescription,
+                                     likes: entry.value.likes,
+                                      height: entry.value.height,
+                                      width: entry.value.width,
                                       //altHeader: entry.value.altDescription,
 
                                       //index: entry.key,
@@ -275,7 +278,12 @@ class _HomeScreenState extends State<HomeScreen> {
                               context,
                               MaterialPageRoute(
                                 builder: (context) => FullImage(
-                                  image: image,
+                                  //image: image,
+                                  imageUrl: image.fullUrl,
+                                  altDescription: image.altDescription,
+                                  likes: image.likes,
+                                  height: image.height,
+                                  width: image.width,
                                 ),
                               ),
                             );

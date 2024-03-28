@@ -132,8 +132,7 @@ class _TrendingScreenState extends State<TrendingScreen> {
                       children: [
                         GestureDetector(
                           onTap: () {
-                            String imageUrl = imagesProvider
-                                .trendImage[_currentImageIndex].regularUrl;
+                            String imageUrl = imagesProvider.trendImage[_currentImageIndex].fullUrl;
                             SaveToDevice.saveImage(context, imageUrl);
                           },
                           child: const Icon(

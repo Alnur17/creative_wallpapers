@@ -87,8 +87,11 @@ class _CollectionScreenState extends State<CollectionScreen> {
                     context,
                     MaterialPageRoute(
                       builder: (context) => FullImage(
-                        imageUrl:
-                        imagesProviders.collectionImage[index].regularUrl,
+                        imageUrl: imagesProviders.collectionImage[index].fullUrl,
+                        altDescription: imagesProviders.collectionImage[index].altDescription,
+                        likes: imagesProviders.collectionImage[index].likes,
+                        height: imagesProviders.collectionImage[index].height,
+                        width: imagesProviders.collectionImage[index].width,
                       ),
                     ),
                   ),

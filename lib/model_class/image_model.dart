@@ -5,9 +5,9 @@ class ImageModel {
   final String regularUrl;
   final String rawUrl;
   final String altDescription;
-  final String height;
-  final String width;
-  final String likes;
+  final int height;
+  final int width;
+  final int likes;
 
   bool isFavorite;
 
@@ -33,9 +33,9 @@ class ImageModel {
       regularUrl: json['urls']['regular'],
       altDescription:
           json['alt_description'] ?? 'No altered description available',
-      height: json['height'],
-      width: json['width'],
-      likes: json['likes'],
+      height: json['height'] ?? 0, // Parse as int
+      width: json['width'] ?? 0,
+      likes: json['likes'] ?? 0,
     );
   }
 }

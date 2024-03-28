@@ -69,14 +69,13 @@ class ImagesProvider with ChangeNotifier {
   // }
 
   Future<void> fetchImages() async {
-    if (_isLoadingAll || !_hasMoreDataAll)
-      return;
+    if (_isLoadingAll || !_hasMoreDataAll) return;
     _isLoadingAll = true;
     // notifyListeners();
 
     try {
       final response = await http.get(Uri.parse(
-          'https://api.unsplash.com/photos/?client_id=e8gVc5wKIVcSIihSoURU8f0t6vlbG_sNTAH-1Ypr08k&page=$_currentPage&per_page=$_perPage'));
+          'https://api.unsplash.com/photos/?client_id=RXHGOr2roQzdKvBe4ddPQdAdrO3vw2Qy2K8pIiB9OZw&page=$_currentPage&per_page=$_perPage'));
 
       if (response.statusCode == 200) {
         List<dynamic> data = json.decode(response.body);
@@ -152,7 +151,6 @@ class ImagesProvider with ChangeNotifier {
   }
 
   Future<void> fetchCollectionImages(String query) async {
-    print("fetchCollectionImages");
     if (_isLoadingCollection || !_hasMoreDataCollection) return;
     _isLoadingCollection = true;
     //notifyListeners();
@@ -164,11 +162,11 @@ class ImagesProvider with ChangeNotifier {
       );
       if (response.statusCode == 200) {
         List<dynamic> data = json.decode(response.body)['results'];
-        List<CollectionImage> colImage = data.map((json) => CollectionImage.fromJson(json)).toList();
+        List<CollectionImage> collectImage = data.map((json) => CollectionImage.fromJson(json)).toList();
         if (_currentPage == 1) {
-          _collectionImage = colImage;
+          _collectionImage = collectImage;
         } else {
-          _collectionImage.addAll(colImage);
+          _collectionImage.addAll(collectImage);
         }
 
         //print("_collectionImage - ${_collectionImage.length}");
@@ -186,7 +184,7 @@ class ImagesProvider with ChangeNotifier {
     } catch (error) {
       _errorMessage = 'Error: $error';
       print('Catch');
-      print(error.toString());
+      print(error);
     } finally {
       _isLoadingCollection = false;
       notifyListeners();
