@@ -143,7 +143,7 @@ class FullImage extends StatelessWidget {
             children: [
               Text(
                 capitalize(altDescription),
-                style: styleWB18,
+                style: styleWB20,
                 maxLines: 2,
                 overflow: TextOverflow.ellipsis,
               ),
@@ -186,7 +186,7 @@ class FullImage extends StatelessWidget {
             children: [
               Text(
                 capitalize(altDescription),
-                style: styleWB18,
+                style: styleWB20,
                 maxLines: 2,
                 overflow: TextOverflow.ellipsis,
               ),

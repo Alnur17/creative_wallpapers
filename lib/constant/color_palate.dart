@@ -79,6 +79,13 @@ const styleRB24 = TextStyle(
   fontWeight: FontWeight.bold,
 );
 
+const styleRB20 = TextStyle(
+  //color: Color(0xffFFA500),
+  color: textRed,
+  fontSize: 20,
+  fontWeight: FontWeight.bold,
+);
+
 const styleWB24 = TextStyle(
   color: textWhite,
   fontSize: 24,
@@ -91,7 +98,7 @@ const styleWB16 = TextStyle(
   fontWeight: FontWeight.bold,
 );
 
-const styleWB18 = TextStyle(
+const styleWB20 = TextStyle(
   color: textWhite,
   fontSize: 20,
   fontWeight: FontWeight.bold,

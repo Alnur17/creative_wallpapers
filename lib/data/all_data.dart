@@ -1,3 +1,5 @@
+import 'package:flutter/material.dart';
+import '../model_class/category_model.dart';
 
 final List<String> collectionNames = [
   'Dopamine',
@@ -66,7 +68,46 @@ final List<String> colorName = [
   'Magenta'
 ];
 
+final List<Category> items = [
+  Category(
+    title: 'Edit Profile',
+    subtitle: 'You can Edit your profile details here',
+    image: 'assets/icons/Edit.png',
+  ),
+  Category(
+    title: 'Contributor',
+    subtitle: 'All your creativity pays you off',
+    image: 'assets/icons/Contributor.png',
+  ),
+  Category(
+    title: 'Subscription',
+    subtitle: 'Subscribe for Ad Block',
+    image: 'assets/icons/Wallet.png',
+  ),
+  Category(
+    title: 'Security',
+    subtitle: 'Check out the details here',
+    image: 'assets/icons/Security.png',
+  ),
+  Category(
+    title: 'Language',
+    subtitle: 'You can change language here',
+    image: 'assets/icons/Language.png',
+  ),
+  Category(
+    title: 'About',
+    subtitle: 'Know more about the app',
+    image: 'assets/icons/About.png',
+  ),
+  Category(
+    title: 'Logout',
+    subtitle: 'Logout your app',
+    image: 'assets/icons/Logout.png',
+  ),
+];
+
 String capitalize(String input) {
   if (input.isEmpty) return input;
   return input[0].toUpperCase() + input.substring(1);
 }
+

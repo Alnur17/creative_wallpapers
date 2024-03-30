@@ -155,7 +155,7 @@ class ImagesProvider with ChangeNotifier {
   Future<void> fetchCollectionImages(String query) async {
     if (_isLoadingCollection || !_hasMoreDataCollection) return;
     _isLoadingCollection = true;
-    //notifyListeners();
+    notifyListeners();
 
     try {
       final response = await http.get(

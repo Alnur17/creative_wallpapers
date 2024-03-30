@@ -10,7 +10,9 @@ class SettingsScreen extends StatelessWidget {
       //backgroundColor: Colors.black.withOpacity(0.1),
       backgroundColor: background,
       body: Column(
-        children: [],
+        children: [
+
+        ],
       ),
     );
   }

@@ -1,10 +1,10 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:carousel_slider/carousel_slider.dart';
+import 'package:creative_wallpapers/screens/profile_screen.dart';
 import 'package:creative_wallpapers/screens/search_screen.dart';
 import 'package:creative_wallpapers/constant/color_palate.dart';
 import 'package:creative_wallpapers/widgets/full_image.dart';
 import 'package:creative_wallpapers/provider/image_provider.dart';
-import 'package:creative_wallpapers/screens/settings_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -63,7 +63,7 @@ class _HomeScreenState extends State<HomeScreen> {
                   Navigator.push(
                       context,
                       MaterialPageRoute(
-                        builder: (context) => const SettingsScreen(),
+                        builder: (context) => const ProfileScreen(),
                       ));
                 },
                 child: const Icon(
@@ -93,11 +93,12 @@ class _HomeScreenState extends State<HomeScreen> {
                       builder: (context) => const SearchScreen(),
                     ));
               },
-              child: const Icon(
-                Icons.search,
-                color: textRed,
-                size: 30,
-              ),
+              child: Image.asset('assets/icons/Search.png',color: textRed,),
+              // child: const Icon(
+              //   Icons.search,
+              //   color: textRed,
+              //   size: 30,
+              // ),
             )
           ],
         ),
