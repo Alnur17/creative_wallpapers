@@ -5,15 +5,11 @@ import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
 
-
-
 class ImagesProvider with ChangeNotifier {
   List<ImageModel> _images = [];
   List<TrendingImage> _trendImage = [];
   List<CollectionImage> _collectionImage = [];
   List<TrendingImage> _searchImage = [];
-
-  final List<CollectionImage> _searchImages = [];
 
   bool _isLoadingAll = false;
   bool _isLoadingTrending = false;
@@ -52,21 +48,6 @@ class ImagesProvider with ChangeNotifier {
   bool get hasMoreDataCollection => _hasMoreDataCollection;
 
   bool get hasMoreDataTrending => _hasMoreDataTrending;
-
-  void toggleFavorite(int index) {
-    _images[index].isFavorite = !_images[index].isFavorite;
-    notifyListeners();
-  }
-
-  void toggleFavoriteTrending(int index) {
-    _trendImage[index].isFavorite = !_trendImage[index].isFavorite;
-    notifyListeners();
-  }
-
-  // void toggleFavoriteCollections(int index) {
-  //   _collectionImage[index].isFavorite = !_collectionImage[index].isFavorite;
-  //   notifyListeners();
-  // }
 
   Future<void> fetchImages() async {
     if (_isLoadingAll || !_hasMoreDataAll) return;
@@ -155,7 +136,7 @@ class ImagesProvider with ChangeNotifier {
   Future<void> fetchCollectionImages(String query) async {
     if (_isLoadingCollection || !_hasMoreDataCollection) return;
     _isLoadingCollection = true;
-    notifyListeners();
+    //notifyListeners();
 
     try {
       final response = await http.get(
@@ -164,7 +145,8 @@ class ImagesProvider with ChangeNotifier {
       );
       if (response.statusCode == 200) {
         List<dynamic> data = json.decode(response.body)['results'];
-        List<CollectionImage> collectImage = data.map((json) => CollectionImage.fromJson(json)).toList();
+        List<CollectionImage> collectImage =
+            data.map((json) => CollectionImage.fromJson(json)).toList();
         if (_currentPage == 1) {
           _collectionImage = collectImage;
         } else {
@@ -196,7 +178,8 @@ class ImagesProvider with ChangeNotifier {
     // _searchImage = [];
     // print("fetchImagesByColor");
     // if (_isLoadingSearch || !_hasMoreDataSearch) return;
-    // _isLoadingSearch = true;
+     _isLoadingSearch = true;
+     _searchImage.clear();
     // notifyListeners();
 
     try {
@@ -207,9 +190,10 @@ class ImagesProvider with ChangeNotifier {
       if (response.statusCode == 200) {
         List<dynamic> data = json.decode(response.body)["results"];
 
-        if (data.isNotEmpty) { // Only update if data is not empty
+        if (data.isNotEmpty) {
+          // Only update if data is not empty
           List<TrendingImage> newImage =
-          data.map((json) => TrendingImage.fromJson(json)).toList();
+              data.map((json) => TrendingImage.fromJson(json)).toList();
 
           if (_currentPage == 1) {
             _searchImage = newImage;
@@ -227,7 +211,6 @@ class ImagesProvider with ChangeNotifier {
         _currentPage++;
         _errorMessage = ''; // Reset error message
       } else {
-
         _errorMessage = 'Failed to load images';
       }
     } catch (error) {
@@ -238,22 +221,11 @@ class ImagesProvider with ChangeNotifier {
     }
   }
 
-
-  clearColorSearch() async {
+/*  clearSearch() async {
     _searchImage.clear();
+  }*/
+
+  clearList() async {
+    _collectionImage.clear();
   }
-
-  clearSearch() async {
-    _searchImages.clear();
-
-  }
-
-
-// Future<void> loadMoreImage() async {
-//   await fetchSearchedImages('peacock');
-// }
-
-// Future<void> loadsMoreImage() async {
-//   await fetchSearchedImages('bird');
-// }
 }

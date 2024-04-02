@@ -47,13 +47,12 @@ class SearchScreen extends StatelessWidget {
                                   ViewByCategory(value: searchController.text)),
                         );
                       },
-                      child: const Padding(
-                        padding: EdgeInsets.only(right: 25.0),
+                      child:  Padding(
+                        padding: const EdgeInsets.only(right: 25.0),
                         // Adjust icon padding as needed
-                        child: Icon(
-                          Icons.search_sharp,
-                          color: textWhite,
-                          size: 28,
+                        child: Image.asset(
+                          'assets/icons/Searching.png',
+                          width: 30,
                         ),
                       ),
                     ),

@@ -14,7 +14,7 @@ class Collections extends StatelessWidget {
     return Scaffold(
       backgroundColor: background,
       appBar: AppBar(
-        toolbarHeight: 80,
+        toolbarHeight: 75,
         backgroundColor: background,
         elevation: 0,
         title: const Text(

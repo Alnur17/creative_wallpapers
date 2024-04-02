@@ -22,11 +22,11 @@ class _CollectionScreenState extends State<CollectionScreen> {
   void initState() {
     super.initState();
     _listController.addListener(_scrollListener);
-    initializeData();
+     initializeData();
   }
 
   void initializeData() async {
-    await Provider.of<ImagesProvider>(context, listen: false).clearSearch();
+    await Provider.of<ImagesProvider>(context, listen: false).clearList();
     final imagesProviders = Provider.of<ImagesProvider>(context, listen: false);
     imagesProviders.fetchCollectionImages(widget.collectionName);
   }
@@ -44,11 +44,6 @@ class _CollectionScreenState extends State<CollectionScreen> {
           .fetchCollectionImages(widget.collectionName);
     }
   }
-
-  // String capitalize(String input) {
-  //   if (input.isEmpty) return input;
-  //   return input[0].toUpperCase() + input.substring(1);
-  // }
 
   @override
   Widget build(BuildContext context) {
@@ -75,7 +70,7 @@ class _CollectionScreenState extends State<CollectionScreen> {
               imagesProviders.images.isEmpty) {
             return Center(
               child: Text(
-                imagesProviders.errorMessage,
+                imagesProviders.errorMessage,style: styleWB16,
               ),
             );
           } else {
@@ -110,9 +105,9 @@ class _CollectionScreenState extends State<CollectionScreen> {
                       child: CachedNetworkImage(
                         imageUrl: imagesProviders.collectionImage[index].thumbUrl,
                         fit: BoxFit.cover,
-                        // placeholder: (context, url) => buildShimmerPlaceholder(),
-                        // errorWidget: (context, url, error) =>
-                        //     const Icon(Icons.error),
+                         placeholder: (context, url) => buildShimmerPlaceholder(),
+                        errorWidget: (context, url, error) =>
+                        const Center(child: Icon(Icons.error,color: textWhite,)),
                       ),
                     ),
                   );

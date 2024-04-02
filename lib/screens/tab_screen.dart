@@ -1,6 +1,5 @@
 import 'package:creative_wallpapers/constant/color_palate.dart';
 import 'package:creative_wallpapers/screens/collections.dart';
-import 'package:creative_wallpapers/screens/favorite_screen.dart';
 import 'package:creative_wallpapers/screens/home_screen.dart';
 import 'package:creative_wallpapers/screens/trending_screen.dart';
 import 'package:flutter/material.dart';
@@ -28,7 +27,7 @@ class _TabsScreenState extends State<TabsScreen> {
     const HomeScreen(),
     const TrendingScreen(),
     const Collections(),
-    const FavoriteScreen(),
+    //const SettingsScreen(),
   ];
 
   @override
@@ -45,64 +44,47 @@ class _TabsScreenState extends State<TabsScreen> {
 
   @override
   Widget build(BuildContext context) {
-    // Widget activePage = const HomeScreen();
-    // //var activePageTitle = 'Home';
-    //
-    // if (_selectedPageIndex == 1) {
-    //   activePage = const TrendingScreen();
-    //   //activePageTitle = 'Trending';
-    // }   if (_selectedPageIndex == 2) {
-    //   activePage = const CollectionScreen();
-    //   // activePageTitle = 'Collection';
-    // }   if (_selectedPageIndex == 3) {
-    //   activePage = const FavoriteScreen();
-    //   //activePageTitle = 'Favorite';
-    // }
-
     return Scaffold(
       backgroundColor: background,
-      // appBar: AppBar(
-      //   backgroundColor: const Color(0xffFFFAEB),
-      //   title: Text(activePageTitle,style: TextStyle(color: Colors.black),),
-      // ),
       body: Stack(
         children: [
           _screens[_selectedPageIndex],
           Align(
-            alignment: const Alignment(0.0, 1.0),
+            alignment: Alignment.bottomCenter,
             child: Container(
               height: 65,
-              margin: const EdgeInsets.only(left: 16, right: 16, bottom: 16),
+              margin: const EdgeInsets.symmetric(horizontal: 16,vertical: 16),
               child: ClipRRect(
                 borderRadius: BorderRadius.circular(30),
                 child: BottomNavigationBar(
                   selectedItemColor: textRed,
                   unselectedItemColor: textWhite,
-                  //backgroundColor: Colors.transparent,
+                  backgroundColor: Colors.black87,
+                  showUnselectedLabels: false,
                   currentIndex: _selectedPageIndex,
-                  // type: BottomNavigationBarType.fixed,
+                  // type: BottomNavigationBarType.shifting,
                   onTap: selectedPage,
                   items: const [
                     BottomNavigationBarItem(
-                      icon: Icon(Icons.home_filled),
+                      icon: Icon(Icons.home_filled,size: 28,),
                       label: 'Home',
-                      backgroundColor: Colors.black87,
+                      //backgroundColor: Colors.black87,
                     ),
                     BottomNavigationBarItem(
-                      icon: Icon(Icons.local_fire_department_sharp),
+                      icon: Icon(Icons.local_fire_department_sharp,size: 30,),
                       label: 'Trending',
-                      backgroundColor: Colors.black87,
+                      //backgroundColor: Colors.black87,
                     ),
                     BottomNavigationBarItem(
-                      icon: Icon(Icons.collections_sharp),
+                      icon: Icon(Icons.collections_rounded,size: 26,),
                       label: 'Collection',
-                      backgroundColor: Colors.black87,
+                      //backgroundColor: Colors.black87,
                     ),
-                    BottomNavigationBarItem(
-                      icon: Icon(Icons.favorite_sharp),
-                      label: 'Favorite',
-                      backgroundColor: Colors.black87,
-                    ),
+                    // BottomNavigationBarItem(
+                    //   icon: Icon(Icons.settings),
+                    //   label: 'Settings',
+                    //   backgroundColor: Colors.black87,
+                    // ),
                   ],
                 ),
               ),
@@ -110,84 +92,6 @@ class _TabsScreenState extends State<TabsScreen> {
           ),
         ],
       ),
-
-      /* bottomNavigationBar: Container(
-          height: 75,
-          padding: const EdgeInsets.only(left: 12,right: 12,bottom: 16),
-          child: ClipRRect(
-            borderRadius: BorderRadius.circular(30),
-            clipBehavior: Clip.antiAlias,
-            child: BackdropFilter(
-              filter: ImageFilter.blur(sigmaX: 0, sigmaY: 40),
-              child: BottomNavigationBar(
-                selectedItemColor: textRed,
-                unselectedItemColor: textWhite,
-                //showUnselectedLabels: true,
-                //backgroundColor: Colors.red,
-                // Set the background color of the BottomNavigationBar to transparent
-                currentIndex: _selectedPageIndex ,
-                onTap: selectedPage,
-                items: const [
-                  BottomNavigationBarItem(
-                    icon: Icon(Icons.home_filled),
-                    label: 'Home',
-                    backgroundColor: Colors.black12,
-                  ),
-                  BottomNavigationBarItem(
-                    icon: Icon(Icons.local_fire_department_sharp),
-                    label: 'Trending',
-                    backgroundColor: Colors.black12,
-                  ),
-                  BottomNavigationBarItem(
-                    icon: Icon(Icons.collections_sharp),
-                    label: 'Collection',
-                    backgroundColor: Colors.black12,
-                  ),
-                  BottomNavigationBarItem(
-                    icon: Icon(Icons.favorite_sharp),
-                    label: 'Favorite',
-                    backgroundColor: Colors.black12,
-                  ),
-                ],
-              ),
-            ),
-          ),
-        ),
-        */
-
-      /*bottomNavigationBar: Container(
-        height: 70,
-        margin: const EdgeInsets.only(left: 8,bottom: 16,right: 8),
-        child: ClipRRect(
-          borderRadius: BorderRadiusDirectional.circular(30),
-          child: BottomNavigationBar(
-            selectedItemColor: Theme.of(context).colorScheme.onBackground,
-            unselectedItemColor: Theme.of(context).colorScheme.onPrimary,
-            showUnselectedLabels: true,
-            currentIndex: _selectedPageIndex,
-            onTap: selectedPage,
-            items: const [
-              BottomNavigationBarItem(
-                icon: Icon(Icons.home_filled),
-                label: 'Home',
-                backgroundColor: Colors.black12,
-              ),
-              BottomNavigationBarItem(
-                icon: Icon(Icons.local_fire_department_sharp),
-                label: 'Trending',
-              ),
-              BottomNavigationBarItem(
-                icon: Icon(Icons.collections_sharp),
-                label: 'Collection',
-              ),
-              BottomNavigationBarItem(
-                icon: Icon(Icons.favorite_sharp),
-                label: 'Favorite',
-              ),
-            ],
-          ),
-        ),
-      ),*/
     );
   }
 }

@@ -3,6 +3,7 @@ import 'package:creative_wallpapers/constant/color_palate.dart';
 import 'package:creative_wallpapers/screens/view_by_category.dart';
 import 'package:flutter/material.dart';
 
+
 class SearchByCategory extends StatefulWidget {
   const SearchByCategory({
     super.key,

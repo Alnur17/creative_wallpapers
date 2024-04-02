@@ -30,8 +30,6 @@ class _ViewByCategoryState extends State<ViewByCategory> {
   }
 
   void initializeData() async {
-    await Provider.of<ImagesProvider>(context, listen: false)
-        .clearColorSearch();
     final imagesProvider = Provider.of<ImagesProvider>(context, listen: false);
     imagesProvider.fetchImagesByColor(widget.value);
   }
@@ -55,134 +53,72 @@ class _ViewByCategoryState extends State<ViewByCategory> {
     return Scaffold(
       backgroundColor: background,
       appBar: AppBar(
-        toolbarHeight: 80,
+        toolbarHeight: 75,
         backgroundColor: background,
         elevation: 0,
-        title: Text(widget.value,style: styleWB24,),
+        title: Text(
+          widget.value,
+          style: styleWB24,
+        ),
       ),
-      body: Consumer<ImagesProvider>(
-        builder: (context, imagesProvider, _) {
-          if (imagesProvider.isLoadingSearch) {
-            return buildShimmerPlaceholder();
-          } else if (imagesProvider.hasError || imagesProvider.images.isEmpty) {
-            return Center(
-              child: Text(
-                'Error: ${imagesProvider.errorMessage}',
-                style: styleWB24,
-              ),
-            );
-          } else {
-            return GridView.builder(
-              padding: const EdgeInsets.all(8),
-              gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-                crossAxisCount: 2, // Number of columns in the grid
-                crossAxisSpacing: 12, // Spacing between columns
-                mainAxisSpacing: 12, // Spacing between rows
-                childAspectRatio:
-                    0.75, // Aspect ratio of grid items (width / height)
-              ),
-              controller: _listController,
-              itemCount: imagesProvider.searchImage.length,
-              itemBuilder: (context, index) {
-                return GestureDetector(
-                  onTap: () => Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                      builder: (context) => FullImage(
-                        imageUrl: imagesProvider.searchImage[index].fullUrl,
-                        altDescription: imagesProvider.searchImage[index].altDescription,
-                        likes: imagesProvider.searchImage[index].likes,
-                        height: imagesProvider.searchImage[index].height,
-                        width: imagesProvider.searchImage[index].width,
+      body: Consumer<ImagesProvider>(builder: (context, imagesProvider, _) {
+        if (imagesProvider.isLoadingSearch) {
+          return buildShimmerPlaceholder();
+        } else if (imagesProvider.hasError) {
+          return Center(
+            child: Text('Error: ${imagesProvider.errorMessage}', style: styleWB24),
+          );
+        } else{
+          if(imagesProvider.searchImage.isNotEmpty){
+            return Padding(
+              padding: const EdgeInsets.only(left: 16, right: 16),
+              child: GridView.builder(
+                gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+                  crossAxisCount: 2,
+                  crossAxisSpacing: 12,
+                  mainAxisSpacing: 12,
+                  childAspectRatio: 0.75,
+                ),
+                controller: _listController,
+                itemCount: imagesProvider.searchImage.length,
+                itemBuilder: (context, index) {
+                  return GestureDetector(
+                    onTap: () => Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => FullImage(
+                          imageUrl: imagesProvider.searchImage[index].fullUrl,
+                          altDescription: imagesProvider.searchImage[index].altDescription,
+                          likes: imagesProvider.searchImage[index].likes,
+                          height: imagesProvider.searchImage[index].height,
+                          width: imagesProvider.searchImage[index].width,
+                        ),
                       ),
                     ),
-                  ),
-                  child: ClipRRect(
-                    borderRadius: BorderRadius.circular(16),
-                    child: CachedNetworkImage(
-                      imageUrl: imagesProvider.searchImage[index].thumbUrl,
-                      fit: BoxFit.cover,
+                    child: ClipRRect(
+                      borderRadius: BorderRadius.circular(16),
+                      child: CachedNetworkImage(
+                        imageUrl: imagesProvider.searchImage[index].thumbUrl,
+                        fit: BoxFit.cover,
+                        placeholder: (context, url) => buildShimmerPlaceholder(),
+                        errorWidget: (context, url, error) => const Icon(Icons.error),
+                      ),
                     ),
-                  ),
-                );
-              },
-            );
-          }
-        },
-      ),
-    );
-  }
-}
-
-/*
-import 'package:cached_network_image/cached_network_image.dart';
-import 'package:creative_wallpapers/constant/color_palate.dart';
-import 'package:creative_wallpapers/widgets/shimmer_placeholder.dart';
-import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
-
-import '../provider/image_provider.dart';
-
-class ViewByColor extends StatefulWidget {
-  const ViewByColor({
-    super.key,
-    required this.colorNames,
-  });
-
-  final String colorNames;
-
-  @override
-  State<ViewByColor> createState() => _ViewByColorState();
-}
-
-class _ViewByColorState extends State<ViewByColor> {
-
-  @override
-  void initState() {
-    final imagesProvider = Provider.of<ImagesProvider>(context, listen: false);
-    imagesProvider.clearColorSearch();
-    imagesProvider.fetchImagesByColor(widget.colorNames);
-    super.initState();
-  }
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      backgroundColor: background,
-      appBar: AppBar(
-        backgroundColor: background,
-        elevation: 0,
-        title: const Text('View By Color'),
-      ),
-      body: Consumer<ImagesProvider>(
-        builder: (context, imagesProvider, _) {
-          if (imagesProvider.isLoadingSearch) {
-            return buildShimmerPlaceholder();
-          } else if (imagesProvider.hasError) {
-            return Center(
-              child: Text('Error: ${imagesProvider.errorMessage}',style: styleWB24,),
-            );
-          } else {
-            return GridView.builder(
-              padding: const EdgeInsets.all(8),
-              gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-                crossAxisCount: 2, // Number of columns in the grid
-                crossAxisSpacing: 8, // Spacing between columns
-                mainAxisSpacing: 8, // Spacing between rows
-                childAspectRatio: 0.75, // Aspect ratio of grid items (width / height)
+                  );
+                },
               ),
-              itemCount: imagesProvider.searchImage.length,
-              itemBuilder: (context, index) {
-                return GridTile(
-                  child: CachedNetworkImage(
-                    imageUrl: imagesProvider.searchImage[index].thumbUrl,
-                    fit: BoxFit.cover,
-                  ),
-                );
-              },
+            );
+          }else{
+            return const Center(
+              child: Text(
+                'No Data Available',
+                style: styleWB16,
+              ),
             );
           }
-        },
-      ),
+        }
+      }),
     );
   }
-} */
+
+}
