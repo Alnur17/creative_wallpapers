@@ -26,9 +26,9 @@ class _CollectionScreenState extends State<CollectionScreen> {
   }
 
   void initializeData() async {
-    await Provider.of<ImagesProvider>(context, listen: false).clearList();
-    await Provider.of<ImagesProvider>(context, listen: false).resetCurrentPage();
-    await Provider.of<ImagesProvider>(context, listen: false).fetchCollectionImages(widget.collectionName);
+     await Provider.of<ImagesProvider>(context, listen: false).clearList();
+     await Provider.of<ImagesProvider>(context, listen: false).resetCurrentPage();
+     Provider.of<ImagesProvider>(context, listen: false).fetchCollectionImages(widget.collectionName);
   }
 
   void _scrollListener() {

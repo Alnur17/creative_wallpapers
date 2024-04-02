@@ -139,8 +139,9 @@ class ImagesProvider with ChangeNotifier {
 
 
   // Method to reset the current page to 1
-  resetCurrentPage() async{
+   resetCurrentPage() async{
     _currentPage = 1;
+    notifyListeners();
   }
 
   Future<void> fetchCollectionImages(String query) async {
@@ -296,7 +297,7 @@ class ImagesProvider with ChangeNotifier {
     _searchImage.clear();
   }*/
 
-  clearList() async{
+   clearList() async{
     _collectionImage.clear();
     //notifyListeners();
   }
