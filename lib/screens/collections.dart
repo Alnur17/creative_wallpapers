@@ -9,6 +9,7 @@ import '../data/all_data.dart';
 class Collections extends StatelessWidget {
   const Collections({super.key});
 
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(

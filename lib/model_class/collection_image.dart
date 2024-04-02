@@ -1,5 +1,6 @@
 class CollectionImage {
   final String id;
+  final String title;
   final String smallUrl;
   final String thumbUrl;
   final String regularUrl;
@@ -11,6 +12,7 @@ class CollectionImage {
 
   CollectionImage({
     required this.id,
+    required this.title,
     required this.smallUrl,
     required this.thumbUrl,
     required this.regularUrl,
@@ -24,6 +26,7 @@ class CollectionImage {
   factory CollectionImage.fromJson(Map<String, dynamic> json) {
     return CollectionImage(
       id: json['id'],
+      title: json['title'],
       smallUrl: json['cover_photo']['urls']['small'],
       thumbUrl: json['cover_photo']['urls']['thumb'],
       regularUrl: json['cover_photo']['urls']['regular'],

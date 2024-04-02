@@ -6,48 +6,26 @@ import 'package:http/http.dart' as http;
 import 'dart:convert';
 
 class ImagesProvider with ChangeNotifier {
-  List<ImageModel> _images = [];
-  List<TrendingImage> _trendImage = [];
-  List<CollectionImage> _collectionImage = [];
-  List<TrendingImage> _searchImage = [];
 
-  bool _isLoadingAll = false;
-  bool _isLoadingTrending = false;
-  bool _isLoadingCollection = false;
-  bool _isLoadingSearch = false;
-  bool _hasMoreDataAll = true;
-  bool _hasMoreDataTrending = true;
-  bool _hasMoreDataCollection = true;
-  bool _hasMoreDataSearch = true;
-  String _errorMessage = '';
+  final String _clientId = 'e8gVc5wKIVcSIihSoURU8f0t6vlbG_sNTAH-1Ypr08k';
   int _currentPage = 1; // Track current page number
   final int _perPage = 30;
-
-  List<ImageModel> get images => _images;
-
-  List<TrendingImage> get trendImage => _trendImage;
-
-  List<CollectionImage> get collectionImage => _collectionImage;
-
-  List<TrendingImage> get searchImage => _searchImage;
-
-  bool get isLoading => _isLoadingAll;
-
-  bool get isLoadingTrending => _isLoadingTrending;
-
-  bool get isLoadingCollection => _isLoadingCollection;
-
-  bool get isLoadingSearch => _isLoadingSearch;
-
-  bool get hasError => _errorMessage.isNotEmpty;
+  String _errorMessage = '';
 
   String get errorMessage => _errorMessage;
 
+  bool get hasError => _errorMessage.isNotEmpty;
+
+  // For ImageModel or Home image
+  List<ImageModel> _images = [];
+
+  List<ImageModel> get images => _images;
+  bool _isLoadingAll = false;
+  bool _hasMoreDataAll = true;
+
+  bool get isLoading => _isLoadingAll;
+
   bool get hasMoreDataAll => _hasMoreDataAll;
-
-  bool get hasMoreDataCollection => _hasMoreDataCollection;
-
-  bool get hasMoreDataTrending => _hasMoreDataTrending;
 
   Future<void> fetchImages() async {
     if (_isLoadingAll || !_hasMoreDataAll) return;
@@ -56,7 +34,7 @@ class ImagesProvider with ChangeNotifier {
 
     try {
       final response = await http.get(Uri.parse(
-          'https://api.unsplash.com/photos/?client_id=RXHGOr2roQzdKvBe4ddPQdAdrO3vw2Qy2K8pIiB9OZw&page=$_currentPage&per_page=$_perPage'));
+          'https://api.unsplash.com/photos/?client_id=$_clientId&page=$_currentPage&per_page=$_perPage'));
 
       if (response.statusCode == 200) {
         List<dynamic> data = json.decode(response.body);
@@ -91,6 +69,17 @@ class ImagesProvider with ChangeNotifier {
     await fetchImages();
   }
 
+  // Trending Images
+  List<TrendingImage> _trendImage = [];
+  bool _isLoadingTrending = false;
+  bool _hasMoreDataTrending = true;
+
+  List<TrendingImage> get trendImage => _trendImage;
+
+  bool get isLoadingTrending => _isLoadingTrending;
+
+  bool get hasMoreDataTrending => _hasMoreDataTrending;
+
   Future<void> fetchTrendingImages(String query) async {
     //print("fetchTrendingImages");
     if (_isLoadingTrending || !_hasMoreDataTrending) {
@@ -101,7 +90,7 @@ class ImagesProvider with ChangeNotifier {
 
     try {
       final response = await http.get(Uri.parse(
-          'https://api.unsplash.com/search/photos?query=$query&client_id=RXHGOr2roQzdKvBe4ddPQdAdrO3vw2Qy2K8pIiB9OZw&page=$_currentPage&per_page=$_perPage'));
+          'https://api.unsplash.com/search/photos?query=$query&client_id=$_clientId&page=$_currentPage&per_page=$_perPage'));
 
       if (response.statusCode == 200) {
         List<dynamic> data = json.decode(response.body)["results"];
@@ -133,20 +122,44 @@ class ImagesProvider with ChangeNotifier {
     }
   }
 
+// For Collection Images
+  List<CollectionImage> _collectionImage = [];
+  bool _isLoadingCollection = false;
+  bool _hasMoreDataCollection = true;
+
+  List<CollectionImage> get collectionImage => _collectionImage;
+
+  bool get isLoadingCollection => _isLoadingCollection;
+
+  bool get hasMoreDataCollection => _hasMoreDataCollection;
+
+  late String _currentCollectionName = '';
+
+  String get currentCollectionName => _currentCollectionName;
+
+
+  // Method to reset the current page to 1
+  resetCurrentPage() async{
+    _currentPage = 1;
+  }
+
   Future<void> fetchCollectionImages(String query) async {
-    if (_isLoadingCollection || !_hasMoreDataCollection) return;
+    _currentCollectionName = query;
     _isLoadingCollection = true;
     //notifyListeners();
 
     try {
       final response = await http.get(
         Uri.parse(
-            'https://api.unsplash.com/search/collections?query=$query&client_id=RXHGOr2roQzdKvBe4ddPQdAdrO3vw2Qy2K8pIiB9OZw&page=$_currentPage&per_page=$_perPage'),
+            'https://api.unsplash.com/search/collections?query=$query&client_id=$_clientId&page=$_currentPage&per_page=$_perPage'),
       );
+      print('this is response');
       if (response.statusCode == 200) {
         List<dynamic> data = json.decode(response.body)['results'];
         List<CollectionImage> collectImage =
             data.map((json) => CollectionImage.fromJson(json)).toList();
+        print(collectImage);
+
         if (_currentPage == 1) {
           _collectionImage = collectImage;
         } else {
@@ -162,44 +175,54 @@ class ImagesProvider with ChangeNotifier {
         _currentPage++;
         _errorMessage = ''; // Reset error message
       } else {
+        print('this is else');
         _errorMessage = 'Failed to load images';
       }
     } catch (error) {
       _errorMessage = 'Error: $error';
-      // print('Catch');
-      // print(error);
+      print('this is Catch');
+      print('$error');
     } finally {
       _isLoadingCollection = false;
       notifyListeners();
     }
   }
 
+  //For Trending Image Search
+  List<TrendingImage> _searchImage = [];
+
+  bool _isLoadingSearch = false;
+
+  bool _hasMoreDataSearch = true;
+
+  List<TrendingImage> get searchImage => _searchImage;
+
+  bool get isLoadingSearch => _isLoadingSearch;
+
   Future<void> fetchImagesByColor(String color) async {
     // _searchImage = [];
     // print("fetchImagesByColor");
-    // if (_isLoadingSearch || !_hasMoreDataSearch) return;
-     _isLoadingSearch = true;
-     _searchImage.clear();
+    //if (_isLoadingSearch || !_hasMoreDataSearch) return;
+
+    _isLoadingSearch = true;
+    _searchImage.clear();
     // notifyListeners();
 
     try {
       final response = await http.get(Uri.parse(
-          'https://api.unsplash.com/search/photos?query=$color&client_id=RXHGOr2roQzdKvBe4ddPQdAdrO3vw2Qy2K8pIiB9OZw&page=$_currentPage&per_page=$_perPage'));
+          'https://api.unsplash.com/search/photos?query=$color&client_id=$_clientId&page=$_currentPage&per_page=$_perPage'));
       // print(response.statusCode);
       // print(response.body);
       if (response.statusCode == 200) {
         List<dynamic> data = json.decode(response.body)["results"];
 
-        if (data.isNotEmpty) {
-          // Only update if data is not empty
-          List<TrendingImage> newImage =
-              data.map((json) => TrendingImage.fromJson(json)).toList();
+        List<TrendingImage> newImage =
+            data.map((json) => TrendingImage.fromJson(json)).toList();
 
-          if (_currentPage == 1) {
-            _searchImage = newImage;
-          } else {
-            _searchImage.addAll(newImage);
-          }
+        if (_currentPage == 1) {
+          _searchImage = newImage;
+        } else {
+          _searchImage.addAll(newImage);
         }
 
         //print("_collectionImage - ${_collectionImage.length}");
@@ -211,9 +234,57 @@ class ImagesProvider with ChangeNotifier {
         _currentPage++;
         _errorMessage = ''; // Reset error message
       } else {
+        print('elseC');
         _errorMessage = 'Failed to load images';
       }
     } catch (error) {
+      print('catchC');
+      _errorMessage = 'Error: $error';
+    } finally {
+      _isLoadingSearch = false;
+      notifyListeners();
+    }
+  }
+
+  Future<void> fetchImagesByColorWhenScroll(String color) async {
+    // _searchImage = [];
+    // print("fetchImagesByColor");
+    //if (_isLoadingSearch || !_hasMoreDataSearch) return;
+    _isLoadingSearch = true;
+
+    //notifyListeners();
+
+    try {
+      final response = await http.get(Uri.parse(
+          'https://api.unsplash.com/search/photos?query=$color&client_id=$_clientId&page=$_currentPage&per_page=$_perPage'));
+      // print(response.statusCode);
+      // print(response.body);
+      if (response.statusCode == 200) {
+        List<dynamic> data = json.decode(response.body)["results"];
+
+        List<TrendingImage> newImage =
+            data.map((json) => TrendingImage.fromJson(json)).toList();
+
+        if (_currentPage == 1) {
+          _searchImage = newImage;
+        } else {
+          _searchImage.addAll(newImage);
+        }
+
+        //print("_collectionImage - ${_collectionImage.length}");
+
+        if (data.length < _perPage) {
+          _hasMoreDataSearch = false; // No more data available
+        }
+
+        _currentPage++;
+        _errorMessage = ''; // Reset error message
+      } else {
+        print('elseS');
+        _errorMessage = 'Failed to load images';
+      }
+    } catch (error) {
+      print('catchS');
       _errorMessage = 'Error: $error';
     } finally {
       _isLoadingSearch = false;
@@ -225,7 +296,8 @@ class ImagesProvider with ChangeNotifier {
     _searchImage.clear();
   }*/
 
-  clearList() async {
+  clearList() async{
     _collectionImage.clear();
+    //notifyListeners();
   }
 }

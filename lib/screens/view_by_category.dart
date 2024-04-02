@@ -43,8 +43,7 @@ class _ViewByCategoryState extends State<ViewByCategory> {
   void _scrollListener() {
     if (_listController.position.pixels ==
         _listController.position.maxScrollExtent) {
-      Provider.of<ImagesProvider>(context, listen: false)
-          .fetchImagesByColor(widget.value);
+      Provider.of<ImagesProvider>(context, listen: false).fetchImagesByColorWhenScroll(widget.value);
     }
   }
 
