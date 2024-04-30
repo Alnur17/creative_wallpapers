@@ -4,9 +4,10 @@ import 'package:creative_wallpapers/data/all_data.dart';
 import 'package:creative_wallpapers/widgets/all_functions.dart';
 import 'package:creative_wallpapers/widgets/shimmer_placeholder.dart';
 import 'package:flutter/material.dart';
-
-
-
+import 'package:flutter/services.dart';
+import 'package:flutter_cache_manager/flutter_cache_manager.dart';
+import 'package:flutter_wallpaper_manager/flutter_wallpaper_manager.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 
 class FullImage extends StatefulWidget {
   const FullImage({
@@ -33,7 +34,6 @@ class _FullImageState extends State<FullImage> {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: background,
-
       body: Stack(
         alignment: Alignment.center,
         children: [
@@ -71,7 +71,17 @@ class _FullImageState extends State<FullImage> {
                       size: 30,
                     ),
                   ),
-
+                  const SizedBox(width: 24),
+                  GestureDetector(
+                    onTap: () {
+                      handleApply(widget.imageUrl, context);
+                    },
+                    child: const Icon(
+                      Icons.save_as,
+                      color: textWhite,
+                      size: 30,
+                    ),
+                  ),
                   const SizedBox(width: 24),
                   GestureDetector(
                     onTap: () {
@@ -109,7 +119,6 @@ class _FullImageState extends State<FullImage> {
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             crossAxisAlignment: CrossAxisAlignment.start,
-
             children: [
               Text(
                 capitalize(widget.altDescription),
@@ -121,14 +130,16 @@ class _FullImageState extends State<FullImage> {
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  Text('Resolution: ( ${widget.height} x ${widget.width} )',style: styleWB16,),
+                  Text(
+                    'Resolution: ( ${widget.height} x ${widget.width} )',
+                    style: styleWB16,
+                  ),
                   Text(
                     'Likes: ${widget.likes}',
                     style: styleWB16,
                   ),
                 ],
               ),
-
             ],
           ),
         );
@@ -137,6 +148,198 @@ class _FullImageState extends State<FullImage> {
   }
 }
 
+// Future<void> handleApply(BuildContext context, String imageUrl) async {
+//   try {
+//     final file = await DefaultCacheManager().getSingleFile(imageUrl);
+//     Fluttertoast.showToast(
+//       msg: "Applying wallpaper...",
+//       toastLength: Toast.LENGTH_SHORT,
+//       gravity: ToastGravity.BOTTOM,
+//     );
+//     await WallpaperManager.setWallpaperFromFile(file.path, WallpaperManager.HOME_SCREEN);
+//     Fluttertoast.showToast(
+//       msg: "Wallpaper applied successfully",
+//       toastLength: Toast.LENGTH_SHORT,
+//       gravity: ToastGravity.BOTTOM,
+//     );
+//   } catch (e) {
+//     Fluttertoast.showToast(
+//       msg: "Failed to apply wallpaper",
+//       toastLength: Toast.LENGTH_SHORT,
+//       gravity: ToastGravity.BOTTOM,
+//     );
+//   }
+// }
+
+Future<Null> handleApply(String image, BuildContext context) async {
+  String? result;
+  // ignore: prefer_typing_uninitialized_variables
+  var file;
+
+  try {
+    showModalBottomSheet(
+      backgroundColor: Colors.black87,
+      shape: const RoundedRectangleBorder(
+        borderRadius: BorderRadius.only(
+          topLeft: Radius.circular(24),
+          topRight: Radius.circular(24),
+        ),
+      ),
+      context: context,
+      builder: (BuildContext context) {
+        return SizedBox(
+          height: 300,
+          child: Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 24),
+            child: Column(
+              children: <Widget>[
+                const SizedBox(height: 40),
+                const Text(
+                  "What would you like to do?",
+                  style: TextStyle(
+                    fontSize: 18,
+                    //fontWeight: FontWeight.w700,
+                    color: textWhite,
+                  ),
+                ),
+                const SizedBox(height: 30),
+                Row(
+                  children: [
+                    const Icon(Icons.phone_android_sharp,
+                      color: textWhite,
+                    ),
+                    const SizedBox(width: 12),
+                    InkWell(
+                      onTap: () async {
+                        Navigator.of(context).pop();
+                        Fluttertoast.showToast(
+                          msg:
+                              "Setting Home Screen Wallpaper Please Wait... ",
+                          toastLength: Toast.LENGTH_SHORT,
+                          gravity: ToastGravity.BOTTOM,
+                        );
+                        file =
+                            await DefaultCacheManager().getSingleFile(image);
+                        result = await WallpaperManager.setWallpaperFromFile(
+                                file.path, WallpaperManager.HOME_SCREEN)
+                            // ignore: missing_return
+                            .then((value) {
+                          Fluttertoast.showToast(
+                            msg: "Successfully Set Wallpaper",
+                            toastLength: Toast.LENGTH_SHORT,
+                            gravity: ToastGravity.BOTTOM,
+                          );
+                          return null;
+                        });
+                      },
+                      child: const Text(
+                        'Set on home screen',
+                        style: TextStyle(
+                          fontSize: 14,
+                          fontWeight: FontWeight.w400,
+                          color: textWhite,
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
+                const SizedBox(height: 12),
+                const Divider(height: 1),
+                const SizedBox(height: 16),
+                Row(
+                  children: [
+                     const Icon(Icons.screen_lock_portrait_sharp,
+                       color: textWhite,
+                    ),
+                    const SizedBox(width: 12),
+                    InkWell(
+                      onTap: () async {
+                        Navigator.of(context).pop();
+                        Fluttertoast.showToast(
+                          msg:
+                              "Setting Lock Screen Wallpaper Please Wait... ",
+                          toastLength: Toast.LENGTH_SHORT,
+                          gravity: ToastGravity.BOTTOM,
+                        );
+                        file =
+                            await DefaultCacheManager().getSingleFile(image);
+                        result = await WallpaperManager.setWallpaperFromFile(
+                                file.path, WallpaperManager.LOCK_SCREEN)
+                            // ignore: missing_return
+                            .then((value) {
+                          Fluttertoast.showToast(
+                            msg: "Successfully Set Wallpaper",
+                            toastLength: Toast.LENGTH_SHORT,
+                            gravity: ToastGravity.BOTTOM,
+                          );
+                          return null;
+                        });
+                      },
+                      child: const Text(
+                        "Set on lock screen",
+                        style: TextStyle(
+                          fontSize: 14,
+                          fontWeight: FontWeight.w400,
+                          color: textWhite,
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
+                const SizedBox(height: 12),
+                const Divider(height: 1),
+                const SizedBox(height: 16),
+                Row(
+                  children: [
+                    const Icon(Icons.phonelink_lock_sharp,
+                      color: textWhite,
+                    ),
+                    const SizedBox(width: 12),
+                    InkWell(
+                      onTap: () async {
+                        Navigator.of(context).pop();
+                        Fluttertoast.showToast(
+                          msg:
+                              "Setting Both Screen Wallpaper Please Wait... ",
+                          toastLength: Toast.LENGTH_SHORT,
+                          gravity: ToastGravity.BOTTOM,
+                        );
+                        file =
+                            await DefaultCacheManager().getSingleFile(image);
+                        result = await WallpaperManager.setWallpaperFromFile(
+                                file.path, WallpaperManager.BOTH_SCREEN)
+                            // ignore: missing_return
+                            .then((value) {
+                          Fluttertoast.showToast(
+                            msg: "Successfully Set Wallpaper",
+                            toastLength: Toast.LENGTH_SHORT,
+                            gravity: ToastGravity.BOTTOM,
+                          );
+                          return null;
+                        });
+                      },
+                      child: const Text(
+                        'Set on both screen',
+                        style: TextStyle(
+                          fontSize: 14,
+                          fontWeight: FontWeight.w400,
+                          color: textWhite,
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
+                const SizedBox(height: 12),
+              ],
+            ),
+          ),
+        );
+      },
+    );
+  } on PlatformException {
+    result = 'Failed to get wallpaper.';
+  }
+}
 
 /*import 'package:flutter/material.dart';
 import 'package:cached_network_image/cached_network_image.dart';

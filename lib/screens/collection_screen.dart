@@ -9,7 +9,7 @@ import '../widgets/shimmer_placeholder.dart';
 class CollectionScreen extends StatefulWidget {
   final String collectionName;
 
-  const CollectionScreen({Key? key, required this.collectionName}) : super(key: key);
+  const CollectionScreen({super.key, required this.collectionName});
 
   @override
   State<CollectionScreen> createState() => _CollectionScreenState();
