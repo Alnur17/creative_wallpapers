@@ -1,4 +1,4 @@
-import 'package:creative_wallpapers/constant/color_palate.dart';
+import '../constant/color_palate.dart';
 import 'package:flutter/material.dart';
 
 class SecurityPrivacyScreen extends StatelessWidget {

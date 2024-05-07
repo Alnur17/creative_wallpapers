@@ -140,7 +140,7 @@ class _HomeScreenState extends State<HomeScreen> {
                             context,
                             MaterialPageRoute(
                               builder: (context) => FullImage(
-                                imageUrl: entry.fullUrl,
+                                imageUrl: entry.regularUrl,
                                 altDescription: entry.altDescription,
                                 likes: entry.likes,
                                 height: entry.height,
@@ -226,7 +226,7 @@ class _HomeScreenState extends State<HomeScreen> {
                               context,
                               MaterialPageRoute(
                                 builder: (context) => FullImage(
-                                  imageUrl: image.fullUrl,
+                                  imageUrl: image.regularUrl,
                                   altDescription: image.altDescription,
                                   likes: image.likes,
                                   height: image.height,

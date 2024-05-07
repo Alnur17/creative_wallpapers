@@ -2,7 +2,6 @@
 
 import 'package:creative_wallpapers/constant/color_palate.dart';
 import 'package:creative_wallpapers/screens/about_screen.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 import '../screens/security_&_privacy_screen.dart';
@@ -25,12 +24,12 @@ class ProfileItem extends StatelessWidget {
         if (title == 'About') {
           Navigator.push(
             context,
-            MaterialPageRoute(builder: (context) => AboutScreen()),
+            MaterialPageRoute(builder: (context) => const AboutScreen()),
           );
         } else if (title == 'Security') {
           Navigator.push(
             context,
-            MaterialPageRoute(builder: (context) => SecurityPrivacyScreen()),
+            MaterialPageRoute(builder: (context) => const SecurityPrivacyScreen()),
           );
         }
       },

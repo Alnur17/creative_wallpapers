@@ -38,8 +38,7 @@ class _TabsScreenState extends State<TabsScreen> {
 
   initializeData() async {
     await Provider.of<ImagesProvider>(context, listen: false).fetchImages();
-    await Provider.of<ImagesProvider>(context, listen: false)
-        .fetchTrendingImages('trending');
+    await Provider.of<ImagesProvider>(context, listen: false).fetchTrendingImages('trending');
   }
 
   @override
