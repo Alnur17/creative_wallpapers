@@ -124,7 +124,7 @@ class _HomeScreenState extends State<HomeScreen> {
       body: Consumer<ImagesProvider>(
         builder: (context, provider, _) {
           if (provider.isLoading && provider.images.isEmpty) {
-            return buildShimmerPlaceholder();
+            return buildShimmerEffect();
           } else {
             return SingleChildScrollView(
               controller: _carouselController,
