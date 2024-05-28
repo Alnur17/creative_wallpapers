@@ -42,7 +42,7 @@ Widget buildShimmerEffect() {
               mainAxisSpacing: 12,
               childAspectRatio: 0.75,
             ),
-            itemCount: 6, // Placeholder count
+            //itemCount: 6, // Placeholder count
             itemBuilder: (BuildContext context, int index) {
               return Container(
                 color: Colors.white,
