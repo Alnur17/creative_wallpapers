@@ -1,6 +1,7 @@
 import 'package:creative_wallpapers/model_class/collection_image.dart';
 import 'package:creative_wallpapers/model_class/image_model.dart';
 import 'package:creative_wallpapers/model_class/trending_image.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';

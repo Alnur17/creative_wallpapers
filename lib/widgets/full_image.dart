@@ -64,6 +64,8 @@ class _FullImageState extends State<FullImage> {
                     onTap: () {
                       saveImageToDevice(context, widget.imageUrl);
                     },
+
+
                     child: const Icon(
                       Icons.downloading_sharp,
                       color: textWhite,
@@ -151,7 +153,7 @@ Future<void> handleApply(String image, BuildContext context) async {
   try {
     final file = await DefaultCacheManager().getSingleFile(image);
     showModalBottomSheet(
-      backgroundColor: Colors.black87,
+      backgroundColor: Colors.black54,
       shape: const RoundedRectangleBorder(
         borderRadius: BorderRadius.only(
           topLeft: Radius.circular(24),
@@ -170,14 +172,17 @@ Future<void> handleApply(String image, BuildContext context) async {
                 const Text(
                   "What would you like to do?",
                   style: TextStyle(
-                    fontSize: 18,
+                    fontSize: 20,
+                    fontWeight: FontWeight.w600,
                     color: textWhite,
                   ),
                 ),
                 const SizedBox(height: 30),
                 Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
                   children: [
-                    const Icon(Icons.phone_android_sharp,
+                    const Icon(
+                      Icons.phone_android_sharp,
                       color: textWhite,
                     ),
                     const SizedBox(width: 12),
@@ -198,7 +203,8 @@ Future<void> handleApply(String image, BuildContext context) async {
                       child: const Text(
                         'Set on home screen',
                         style: TextStyle(
-                          fontSize: 14,
+                          fontSize: 16,
+                          fontWeight: FontWeight.w600,
                           color: textWhite,
                         ),
                       ),
@@ -209,8 +215,10 @@ Future<void> handleApply(String image, BuildContext context) async {
                 const Divider(height: 1),
                 const SizedBox(height: 16),
                 Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
                   children: [
-                    const Icon(Icons.screen_lock_portrait_sharp,
+                    const Icon(
+                      Icons.screen_lock_portrait_sharp,
                       color: textWhite,
                     ),
                     const SizedBox(width: 12),
@@ -231,7 +239,8 @@ Future<void> handleApply(String image, BuildContext context) async {
                       child: const Text(
                         "Set on lock screen",
                         style: TextStyle(
-                          fontSize: 14,
+                          fontSize: 16,
+                          fontWeight: FontWeight.w600,
                           color: textWhite,
                         ),
                       ),
@@ -242,8 +251,10 @@ Future<void> handleApply(String image, BuildContext context) async {
                 const Divider(height: 1),
                 const SizedBox(height: 16),
                 Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
                   children: [
-                    const Icon(Icons.phonelink_lock_sharp,
+                    const Icon(
+                      Icons.phonelink_lock_sharp,
                       color: textWhite,
                     ),
                     const SizedBox(width: 12),
@@ -264,7 +275,8 @@ Future<void> handleApply(String image, BuildContext context) async {
                       child: const Text(
                         'Set on both screen',
                         style: TextStyle(
-                          fontSize: 14,
+                          fontSize: 16,
+                          fontWeight: FontWeight.w600,
                           color: textWhite,
                         ),
                       ),
@@ -286,7 +298,6 @@ Future<void> handleApply(String image, BuildContext context) async {
     );
   }
 }
-
 
 // Future<void> handleApply(BuildContext context, String imageUrl) async {
 //   try {

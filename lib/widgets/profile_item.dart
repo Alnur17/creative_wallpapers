@@ -7,11 +7,11 @@ import 'package:flutter/material.dart';
 import '../screens/security_&_privacy_screen.dart';
 
 class ProfileItem extends StatelessWidget {
-  String title;
-  String subTitle;
-  String image;
+  final String title;
+  final String subTitle;
+  final String image;
 
-  ProfileItem(
+  const ProfileItem(
       {required this.title,
       required this.subTitle,
       required this.image,
