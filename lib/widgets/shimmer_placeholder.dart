@@ -22,14 +22,16 @@ Widget buildShimmerEffect() {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         const SizedBox(height: 12),
-        Container(
-          height: 200,
-          width: double.infinity,
-          color: Colors.white,
+        Expanded(
+          flex: 1,
+          child: Container(
+            width: double.infinity,
+            color: Colors.white,
+          ),
         ),
         const SizedBox(height: 16),
-        SizedBox(
-          height: 500, // Set a fixed height for the GridView
+        Expanded(
+          flex: 3, // Set a fixed height for the GridView
           child: GridView.builder(
             primary: false,
             shrinkWrap: true,
@@ -39,12 +41,13 @@ Widget buildShimmerEffect() {
               mainAxisSpacing: 12,
               childAspectRatio: 0.75,
             ),
+
             itemCount: 6, // Placeholder count
             itemBuilder: (BuildContext context, int index) {
               return Container(
                 color: Colors.white,
                 child: ClipRRect(
-                  borderRadius: BorderRadius.circular(16),
+                  borderRadius: BorderRadius.circular(30),
                   child: Container(
                     color: Colors.grey[300],
                   ),
@@ -57,4 +60,3 @@ Widget buildShimmerEffect() {
     ),
   );
 }
-

@@ -202,9 +202,6 @@ class ImagesProvider with ChangeNotifier {
   bool get isLoadingSearch => _isLoadingSearch;
 
   Future<void> fetchImagesByColor(String color) async {
-    // _searchImage = [];
-    // print("fetchImagesByColor");
-    //if (_isLoadingSearch || !_hasMoreDataSearch) return;
 
     _isLoadingSearch = true;
     _searchImage.clear();
@@ -293,10 +290,6 @@ class ImagesProvider with ChangeNotifier {
       notifyListeners();
     }
   }
-
-/*  clearSearch() async {
-    _searchImage.clear();
-  }*/
 
    clearList() async{
     _collectionImage.clear();
