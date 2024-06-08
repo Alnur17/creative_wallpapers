@@ -68,7 +68,6 @@ class SearchScreen extends StatelessWidget {
                     TextSpan(
                       text: 'Search by ',
                       style: TextStyle(
-                        //color: Color(0xffFFA500),
                         color: textWhite,
                         fontSize: 20,
                         fontWeight: FontWeight.bold,
@@ -145,22 +144,19 @@ class SearchScreen extends StatelessWidget {
             ),
             SingleChildScrollView(
               scrollDirection: Axis.horizontal,
-              child: Padding(
-                padding: const EdgeInsets.only(right: 12),
-                child: Row(
-                  children: List.generate(
-                    colorName.length + 1,
-                    (index) {
-                      if (index < colorName.length) {
-                        return SearchByColor(
-                          colorName: colorName[index],
-                          gradient: colorGradients[index],
-                        );
-                      } else {
-                        return const SizedBox(width: 16);
-                      }
-                    },
-                  ),
+              child: Row(
+                children: List.generate(
+                  colorName.length + 1,
+                  (index) {
+                    if (index < colorName.length) {
+                      return SearchByColor(
+                        colorName: colorName[index],
+                        gradient: colorGradients[index],
+                      );
+                    } else {
+                      return const SizedBox(width: 16);
+                    }
+                  },
                 ),
               ),
             ),

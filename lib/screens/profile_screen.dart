@@ -2,6 +2,7 @@ import 'package:creative_wallpapers/constant/color_palate.dart';
 import 'package:creative_wallpapers/widgets/profile_item.dart';
 import 'package:flutter/material.dart';
 
+import '../constant/style.dart';
 import '../data/all_data.dart';
 
 class ProfileScreen extends StatelessWidget {

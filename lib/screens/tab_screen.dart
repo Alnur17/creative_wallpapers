@@ -67,23 +67,15 @@ class _TabsScreenState extends State<TabsScreen> {
                     BottomNavigationBarItem(
                       icon: Icon(Icons.home_filled,size: 28,),
                       label: 'Home',
-                      //backgroundColor: Colors.black87,
                     ),
                     BottomNavigationBarItem(
                       icon: Icon(Icons.local_fire_department_sharp,size: 30,),
                       label: 'Trending',
-                      //backgroundColor: Colors.black87,
                     ),
                     BottomNavigationBarItem(
                       icon: Icon(Icons.collections_rounded,size: 26,),
                       label: 'Collection',
-                      //backgroundColor: Colors.black87,
                     ),
-                    // BottomNavigationBarItem(
-                    //   icon: Icon(Icons.settings),
-                    //   label: 'Settings',
-                    //   backgroundColor: Colors.black87,
-                    // ),
                   ],
                 ),
               ),

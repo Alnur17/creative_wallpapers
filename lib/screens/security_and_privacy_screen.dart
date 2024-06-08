@@ -1,6 +1,8 @@
 import '../constant/color_palate.dart';
 import 'package:flutter/material.dart';
 
+import '../constant/style.dart';
+
 class SecurityPrivacyScreen extends StatelessWidget {
   const SecurityPrivacyScreen({super.key});
 

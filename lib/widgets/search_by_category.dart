@@ -1,7 +1,8 @@
 import 'package:cached_network_image/cached_network_image.dart';
-import 'package:creative_wallpapers/constant/color_palate.dart';
 import 'package:creative_wallpapers/screens/view_by_category.dart';
 import 'package:flutter/material.dart';
+
+import '../constant/style.dart';
 
 
 class SearchByCategory extends StatefulWidget {
@@ -21,11 +22,9 @@ class SearchByCategory extends StatefulWidget {
 class _SearchByCategoryState extends State<SearchByCategory> {
   @override
   Widget build(BuildContext context) {
-   // final imagesProvider = Provider.of<ImagesProvider>(context, listen: false);
 
     return GestureDetector(
       onTap: () async {
-        //await imagesProvider.fetchImagesByColor(widget.name);
         Navigator.push(
           context,
           MaterialPageRoute(

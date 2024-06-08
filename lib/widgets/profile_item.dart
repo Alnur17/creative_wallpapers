@@ -4,7 +4,8 @@ import 'package:creative_wallpapers/constant/color_palate.dart';
 import 'package:creative_wallpapers/screens/about_screen.dart';
 import 'package:flutter/material.dart';
 
-import '../screens/security_&_privacy_screen.dart';
+import '../constant/style.dart';
+import '../screens/security_and_privacy_screen.dart';
 
 class ProfileItem extends StatelessWidget {
   final String title;
@@ -34,7 +35,6 @@ class ProfileItem extends StatelessWidget {
         }
       },
       child: Container(
-        //margin: const EdgeInsets.only( right: 16, left: 16),
         padding: const EdgeInsets.all(24),
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(12),

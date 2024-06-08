@@ -9,7 +9,6 @@ const Color matteBlack = Color(0xFF28282B);
 
 final Gradient darkGradient = LinearGradient(
   colors: [matteBlack, Colors.grey[700]!],
-  // Replace Colors.grey[900] with your desired end color
   begin: Alignment.bottomLeft,
   end: Alignment.topRight,
 );
@@ -71,35 +70,3 @@ const List<Gradient> colorGradients = [
     end: Alignment.topRight,
   ),
 ];
-
-const styleRB24 = TextStyle(
-  //color: Color(0xffFFA500),
-  color: textRed,
-  fontSize: 24,
-  fontWeight: FontWeight.bold,
-);
-
-const styleRB20 = TextStyle(
-  //color: Color(0xffFFA500),
-  color: textRed,
-  fontSize: 20,
-  fontWeight: FontWeight.bold,
-);
-
-const styleWB24 = TextStyle(
-  color: textWhite,
-  fontSize: 24,
-  fontWeight: FontWeight.bold,
-);
-
-const styleWB16 = TextStyle(
-  color: textWhite,
-  fontSize: 16,
-  fontWeight: FontWeight.bold,
-);
-
-const styleWB20 = TextStyle(
-  color: textWhite,
-  fontSize: 20,
-  fontWeight: FontWeight.bold,
-);

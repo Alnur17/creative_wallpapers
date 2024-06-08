@@ -5,6 +5,7 @@ import 'package:creative_wallpapers/widgets/shimmer_placeholder.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
+import '../constant/style.dart';
 import '../provider/image_provider.dart';
 
 class ViewByCategory extends StatefulWidget {
@@ -31,7 +32,7 @@ class _ViewByCategoryState extends State<ViewByCategory> {
 
   void initializeData() async {
     final imagesProvider = Provider.of<ImagesProvider>(context, listen: false);
-    imagesProvider.fetchImagesByColor(widget.value);
+    await imagesProvider.fetchImagesByColor(widget.value);
   }
 
   @override
@@ -62,7 +63,7 @@ class _ViewByCategoryState extends State<ViewByCategory> {
       ),
       body: Consumer<ImagesProvider>(builder: (context, imagesProvider, _) {
         if (imagesProvider.isLoadingSearch) {
-          return buildShimmerPlaceholder();
+          return const Center(child: CircularProgressIndicator());
         } else if (imagesProvider.hasError) {
           return Center(
             child: Text('Error: ${imagesProvider.errorMessage}', style: styleWB24),

@@ -6,6 +6,7 @@ import 'package:carousel_slider/carousel_slider.dart';
 import 'package:provider/provider.dart';
 import 'package:creative_wallpapers/model_class/trending_image.dart';
 
+import '../constant/style.dart';
 import '../provider/image_provider.dart';
 import '../widgets/all_functions.dart';
 
@@ -31,11 +32,10 @@ class _TrendingScreenState extends State<TrendingScreen> {
               children: [
                 Positioned.fill(
                   child: imagesProvider.isLoadingTrending
-                      ? buildShimmerPlaceholder()
+                      ? const Center(child: CircularProgressIndicator())
                       : CarouselSlider.builder(
                           itemCount: imagesProvider.trendImage.length,
                           options: CarouselOptions(
-                            //height: MediaQuery.of(context).size.height,
                             scrollDirection: Axis.vertical,
                             autoPlay: false,
                             padEnds: true,
@@ -60,8 +60,8 @@ class _TrendingScreenState extends State<TrendingScreen> {
                               width: double.infinity,
                               imageUrl: image.regularUrl,
                               fit: BoxFit.cover,
-                              placeholder: (context, url) =>
-                                  buildShimmerPlaceholder(),
+                              placeholder: (context, url) => const Center(
+                                  child: CircularProgressIndicator()),
                             );
                           },
                         ),
@@ -70,7 +70,8 @@ class _TrendingScreenState extends State<TrendingScreen> {
                   top: 16,
                   left: 16,
                   child: Container(
-                    padding: const EdgeInsets.symmetric(horizontal: 16,vertical: 16),
+                    padding: const EdgeInsets.symmetric(
+                        horizontal: 16, vertical: 16),
                     decoration: BoxDecoration(
                       borderRadius: BorderRadius.circular(16),
                       color: Colors.black54,
@@ -85,7 +86,8 @@ class _TrendingScreenState extends State<TrendingScreen> {
                   top: 16,
                   right: 16,
                   child: Container(
-                    padding: const EdgeInsets.symmetric(horizontal: 12,vertical: 12),
+                    padding: const EdgeInsets.symmetric(
+                        horizontal: 12, vertical: 12),
                     decoration: BoxDecoration(
                       borderRadius: BorderRadius.circular(16),
                       color: Colors.black54,
@@ -96,7 +98,7 @@ class _TrendingScreenState extends State<TrendingScreen> {
                             .trendImage[_currentImageIndex].fullUrl;
                         saveImageToDevice(context, imageUrl);
                       },
-                      child:  const Icon(
+                      child: const Icon(
                         Icons.downloading_sharp,
                         color: textWhite,
                         size: 28,

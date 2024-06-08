@@ -5,6 +5,7 @@ import 'package:creative_wallpapers/screens/profile_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import '../constant/color_palate.dart';
+import '../constant/style.dart';
 import '../data/all_data.dart';
 import '../provider/image_provider.dart';
 import '../screens/search_screen.dart';
@@ -90,12 +91,10 @@ class _HomeScreenState extends State<HomeScreen> {
                   ? Image.asset(
                       'assets/icons/Settings.gif',
                       width: 32,
-                      //height: 32,
                     )
                   : Image.asset(
                 'assets/icons/SettingsW.png',
                 width: 32,
-                //height: 32,
               )
             ),
             const SizedBox(width: 16),

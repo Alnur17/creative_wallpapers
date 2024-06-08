@@ -7,7 +7,6 @@ import 'package:http/http.dart' as http;
 import 'dart:convert';
 
 class ImagesProvider with ChangeNotifier {
-
   final String _clientId = 'e8gVc5wKIVcSIihSoURU8f0t6vlbG_sNTAH-1Ypr08k';
   int _currentPage = 1; // Track current page number
   final int _perPage = 30;
@@ -31,7 +30,6 @@ class ImagesProvider with ChangeNotifier {
   Future<void> fetchImages() async {
     if (_isLoadingAll || !_hasMoreDataAll) return;
     _isLoadingAll = true;
-    // notifyListeners();
 
     try {
       final response = await http.get(Uri.parse(
@@ -82,12 +80,10 @@ class ImagesProvider with ChangeNotifier {
   bool get hasMoreDataTrending => _hasMoreDataTrending;
 
   Future<void> fetchTrendingImages(String query) async {
-    //print("fetchTrendingImages");
     if (_isLoadingTrending || !_hasMoreDataTrending) {
       return; // Do not fetch if already fetching or no more data
     }
     _isLoadingTrending = true;
-    //notifyListeners();
 
     try {
       final response = await http.get(Uri.parse(
@@ -103,7 +99,6 @@ class ImagesProvider with ChangeNotifier {
         } else {
           _trendImage.addAll(newImage);
         }
-        // print("_trendImage - ${_trendImage.length}");
 
         if (data.length < _perPage) {
           _hasMoreDataTrending = false; // No more data available
@@ -138,9 +133,8 @@ class ImagesProvider with ChangeNotifier {
 
   String get currentCollectionName => _currentCollectionName;
 
-
   // Method to reset the current page to 1
-   resetCurrentPage() async{
+  resetCurrentPage() async {
     _currentPage = 1;
     notifyListeners();
   }
@@ -148,27 +142,22 @@ class ImagesProvider with ChangeNotifier {
   Future<void> fetchCollectionImages(String query) async {
     _currentCollectionName = query;
     _isLoadingCollection = true;
-    //notifyListeners();
 
     try {
       final response = await http.get(
         Uri.parse(
             'https://api.unsplash.com/search/collections?query=$query&client_id=$_clientId&page=$_currentPage&per_page=$_perPage'),
       );
-      print('this is response');
       if (response.statusCode == 200) {
         List<dynamic> data = json.decode(response.body)['results'];
         List<CollectionImage> collectImage =
             data.map((json) => CollectionImage.fromJson(json)).toList();
-        print(collectImage);
 
         if (_currentPage == 1) {
           _collectionImage = collectImage;
         } else {
           _collectionImage.addAll(collectImage);
         }
-
-        //print("_collectionImage - ${_collectionImage.length}");
 
         if (data.length < _perPage) {
           _hasMoreDataCollection = false; // No more data available
@@ -177,13 +166,10 @@ class ImagesProvider with ChangeNotifier {
         _currentPage++;
         _errorMessage = ''; // Reset error message
       } else {
-        print('this is else');
         _errorMessage = 'Failed to load images';
       }
     } catch (error) {
       _errorMessage = 'Error: $error';
-      print('this is Catch');
-      print('$error');
     } finally {
       _isLoadingCollection = false;
       notifyListeners();
@@ -202,16 +188,12 @@ class ImagesProvider with ChangeNotifier {
   bool get isLoadingSearch => _isLoadingSearch;
 
   Future<void> fetchImagesByColor(String color) async {
-
     _isLoadingSearch = true;
     _searchImage.clear();
-    // notifyListeners();
 
     try {
       final response = await http.get(Uri.parse(
           'https://api.unsplash.com/search/photos?query=$color&client_id=$_clientId&page=$_currentPage&per_page=$_perPage'));
-      // print(response.statusCode);
-      // print(response.body);
       if (response.statusCode == 200) {
         List<dynamic> data = json.decode(response.body)["results"];
 
@@ -224,7 +206,6 @@ class ImagesProvider with ChangeNotifier {
           _searchImage.addAll(newImage);
         }
 
-        //print("_collectionImage - ${_collectionImage.length}");
 
         if (data.length < _perPage) {
           _hasMoreDataSearch = false; // No more data available
@@ -233,11 +214,9 @@ class ImagesProvider with ChangeNotifier {
         _currentPage++;
         _errorMessage = ''; // Reset error message
       } else {
-        print('elseC');
         _errorMessage = 'Failed to load images';
       }
     } catch (error) {
-      print('catchC');
       _errorMessage = 'Error: $error';
     } finally {
       _isLoadingSearch = false;
@@ -246,18 +225,13 @@ class ImagesProvider with ChangeNotifier {
   }
 
   Future<void> fetchImagesByColorWhenScroll(String color) async {
-    // _searchImage = [];
-    // print("fetchImagesByColor");
-    //if (_isLoadingSearch || !_hasMoreDataSearch) return;
     _isLoadingSearch = true;
 
-    //notifyListeners();
 
     try {
       final response = await http.get(Uri.parse(
           'https://api.unsplash.com/search/photos?query=$color&client_id=$_clientId&page=$_currentPage&per_page=$_perPage'));
-      // print(response.statusCode);
-      // print(response.body);
+
       if (response.statusCode == 200) {
         List<dynamic> data = json.decode(response.body)["results"];
 
@@ -270,8 +244,6 @@ class ImagesProvider with ChangeNotifier {
           _searchImage.addAll(newImage);
         }
 
-        //print("_collectionImage - ${_collectionImage.length}");
-
         if (data.length < _perPage) {
           _hasMoreDataSearch = false; // No more data available
         }
@@ -279,11 +251,9 @@ class ImagesProvider with ChangeNotifier {
         _currentPage++;
         _errorMessage = ''; // Reset error message
       } else {
-        print('elseS');
         _errorMessage = 'Failed to load images';
       }
     } catch (error) {
-      print('catchS');
       _errorMessage = 'Error: $error';
     } finally {
       _isLoadingSearch = false;
@@ -291,8 +261,7 @@ class ImagesProvider with ChangeNotifier {
     }
   }
 
-   clearList() async{
+  clearList() async {
     _collectionImage.clear();
-    //notifyListeners();
   }
 }

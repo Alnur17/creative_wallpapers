@@ -4,6 +4,7 @@ import 'package:creative_wallpapers/screens/collection_screen.dart';
 import 'package:creative_wallpapers/widgets/shimmer_placeholder.dart';
 import 'package:flutter/material.dart';
 
+import '../constant/style.dart';
 import '../data/all_data.dart';
 
 class Collections extends StatelessWidget {

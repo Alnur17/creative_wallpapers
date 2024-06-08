@@ -4,6 +4,8 @@ import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:image_gallery_saver/image_gallery_saver.dart';
 
+import '../constant/style.dart';
+
 
 void saveImageToDevice(BuildContext context, String imageUrl) async {
     final scaffoldMessenger = ScaffoldMessenger.of(context);
@@ -28,7 +30,6 @@ void saveImageToDevice(BuildContext context, String imageUrl) async {
           Uint8List.fromList(response.data),
           quality: 60,
         );
-        print(result);
 
         scaffoldMessenger.showSnackBar(
           const SnackBar(

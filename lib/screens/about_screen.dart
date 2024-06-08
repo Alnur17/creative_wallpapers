@@ -1,6 +1,8 @@
 import 'package:creative_wallpapers/constant/color_palate.dart';
 import 'package:flutter/material.dart';
 
+import '../constant/style.dart';
+
 class AboutScreen extends StatelessWidget {
   const AboutScreen({super.key});
 

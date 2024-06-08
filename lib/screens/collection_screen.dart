@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import '../constant/color_palate.dart';
+import '../constant/style.dart';
 import '../provider/image_provider.dart';
 import '../widgets/shimmer_placeholder.dart';
 
@@ -26,14 +27,18 @@ class _CollectionScreenState extends State<CollectionScreen> {
   }
 
   void initializeData() async {
-     await Provider.of<ImagesProvider>(context, listen: false).clearList();
-     await Provider.of<ImagesProvider>(context, listen: false).resetCurrentPage();
-     Provider.of<ImagesProvider>(context, listen: false).fetchCollectionImages(widget.collectionName);
+    await Provider.of<ImagesProvider>(context, listen: false).clearList();
+    await Provider.of<ImagesProvider>(context, listen: false)
+        .resetCurrentPage();
+    Provider.of<ImagesProvider>(context, listen: false)
+        .fetchCollectionImages(widget.collectionName);
   }
 
   void _scrollListener() {
-    if (_listController.position.pixels == _listController.position.maxScrollExtent) {
-      Provider.of<ImagesProvider>(context, listen: false).fetchCollectionImages(widget.collectionName);
+    if (_listController.position.pixels ==
+        _listController.position.maxScrollExtent) {
+      Provider.of<ImagesProvider>(context, listen: false)
+          .fetchCollectionImages(widget.collectionName);
     }
   }
 
@@ -56,14 +61,16 @@ class _CollectionScreenState extends State<CollectionScreen> {
           style: Theme.of(context)
               .textTheme
               .titleLarge!
-              .copyWith(color: Theme.of(context).colorScheme.background),
+              .copyWith(color: Theme.of(context).colorScheme.surface),
         ),
       ),
       body: Consumer<ImagesProvider>(
         builder: (context, imagesProviders, _) {
-          if (imagesProviders.isLoadingCollection && imagesProviders.collectionImage.isEmpty) {
-            return buildShimmerPlaceholder();
-          } else if (imagesProviders.hasError && imagesProviders.collectionImage.isEmpty) {
+          if (imagesProviders.isLoadingCollection &&
+              imagesProviders.collectionImage.isEmpty) {
+            return const Center(child: CircularProgressIndicator());
+          } else if (imagesProviders.hasError &&
+              imagesProviders.collectionImage.isEmpty) {
             return Center(
               child: Text(
                 imagesProviders.errorMessage,
@@ -102,8 +109,11 @@ class _CollectionScreenState extends State<CollectionScreen> {
                       child: CachedNetworkImage(
                         imageUrl: image.thumbUrl,
                         fit: BoxFit.cover,
-                        placeholder: (context, url) => buildShimmerPlaceholder(),
-                        errorWidget: (context, url, error) => const Center(child: Icon(Icons.error, color: textWhite)),
+                        placeholder: (context, url) =>
+                            buildShimmerPlaceholder(),
+                        errorWidget: (context, url, error) => const Center(
+                          child: Icon(Icons.error, color: textWhite),
+                        ),
                       ),
                     ),
                   );
@@ -116,6 +126,3 @@ class _CollectionScreenState extends State<CollectionScreen> {
     );
   }
 }
-
-
-

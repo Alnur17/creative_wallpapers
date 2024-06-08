@@ -1,6 +1,7 @@
-import 'package:creative_wallpapers/constant/color_palate.dart';
 import 'package:creative_wallpapers/screens/view_by_category.dart';
 import 'package:flutter/material.dart';
+
+import '../constant/style.dart';
 
 class SearchByColor extends StatelessWidget {
   const SearchByColor({super.key, required this.colorName, required this.gradient,});
@@ -10,11 +11,9 @@ class SearchByColor extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    //final imagesProvider = Provider.of<ImagesProvider>(context, listen: false);
 
     return GestureDetector(
       onTap: () async {
-        //await imagesProvider.fetchImagesByColor(colorName);
         Navigator.push(
           context,
           MaterialPageRoute(
