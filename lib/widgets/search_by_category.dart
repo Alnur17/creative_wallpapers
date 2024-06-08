@@ -1,5 +1,5 @@
 import 'package:cached_network_image/cached_network_image.dart';
-import 'package:creative_wallpapers/screens/view_by_category.dart';
+import 'package:creative_wallpapers/screens/view_by_grid.dart';
 import 'package:flutter/material.dart';
 
 import '../constant/style.dart';
@@ -28,7 +28,7 @@ class _SearchByCategoryState extends State<SearchByCategory> {
         Navigator.push(
           context,
           MaterialPageRoute(
-            builder: (context) => ViewByCategory(
+            builder: (context) => ViewByGrid(
               value: widget.name,
             ),
           ),

@@ -8,8 +8,8 @@ import 'package:provider/provider.dart';
 import '../constant/style.dart';
 import '../provider/image_provider.dart';
 
-class ViewByCategory extends StatefulWidget {
-  const ViewByCategory({
+class ViewByGrid extends StatefulWidget {
+  const ViewByGrid({
     super.key,
     required this.value,
   });
@@ -17,10 +17,10 @@ class ViewByCategory extends StatefulWidget {
   final String value;
 
   @override
-  State<ViewByCategory> createState() => _ViewByCategoryState();
+  State<ViewByGrid> createState() => _ViewByGridState();
 }
 
-class _ViewByCategoryState extends State<ViewByCategory> {
+class _ViewByGridState extends State<ViewByGrid> {
   final ScrollController _listController = ScrollController();
 
   @override
@@ -70,42 +70,47 @@ class _ViewByCategoryState extends State<ViewByCategory> {
           );
         } else{
           if(imagesProvider.searchImage.isNotEmpty){
-            return Padding(
-              padding: const EdgeInsets.only(left: 16, right: 16),
-              child: GridView.builder(
-                gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-                  crossAxisCount: 2,
-                  crossAxisSpacing: 12,
-                  mainAxisSpacing: 12,
-                  childAspectRatio: 0.75,
-                ),
-                controller: _listController,
-                itemCount: imagesProvider.searchImage.length,
-                itemBuilder: (context, index) {
-                  return GestureDetector(
-                    onTap: () => Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                        builder: (context) => FullImage(
-                          imageUrl: imagesProvider.searchImage[index].fullUrl,
-                          altDescription: imagesProvider.searchImage[index].altDescription,
-                          likes: imagesProvider.searchImage[index].likes,
-                          height: imagesProvider.searchImage[index].height,
-                          width: imagesProvider.searchImage[index].width,
+            return RefreshIndicator(
+              onRefresh: () async {
+                return initializeData();
+              },
+              child: Padding(
+                padding: const EdgeInsets.only(left: 12, right: 12,bottom: 12),
+                child: GridView.builder(
+                  gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+                    crossAxisCount: 2,
+                    crossAxisSpacing: 12,
+                    mainAxisSpacing: 12,
+                    childAspectRatio: 0.75,
+                  ),
+                  controller: _listController,
+                  itemCount: imagesProvider.searchImage.length,
+                  itemBuilder: (context, index) {
+                    return GestureDetector(
+                      onTap: () => Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => FullImage(
+                            imageUrl: imagesProvider.searchImage[index].fullUrl,
+                            altDescription: imagesProvider.searchImage[index].altDescription,
+                            likes: imagesProvider.searchImage[index].likes,
+                            height: imagesProvider.searchImage[index].height,
+                            width: imagesProvider.searchImage[index].width,
+                          ),
                         ),
                       ),
-                    ),
-                    child: ClipRRect(
-                      borderRadius: BorderRadius.circular(16),
-                      child: CachedNetworkImage(
-                        imageUrl: imagesProvider.searchImage[index].thumbUrl,
-                        fit: BoxFit.cover,
-                        placeholder: (context, url) => buildShimmerPlaceholder(),
-                        errorWidget: (context, url, error) => const Icon(Icons.error),
+                      child: ClipRRect(
+                        borderRadius: BorderRadius.circular(16),
+                        child: CachedNetworkImage(
+                          imageUrl: imagesProvider.searchImage[index].thumbUrl,
+                          fit: BoxFit.cover,
+                          placeholder: (context, url) => buildShimmerPlaceholder(),
+                          errorWidget: (context, url, error) => const Icon(Icons.error),
+                        ),
                       ),
-                    ),
-                  );
-                },
+                    );
+                  },
+                ),
               ),
             );
           }else{

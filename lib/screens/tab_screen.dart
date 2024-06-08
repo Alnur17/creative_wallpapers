@@ -33,10 +33,10 @@ class _TabsScreenState extends State<TabsScreen> {
   @override
   void initState() {
     super.initState();
-    initializeData();
+    initializeData(context);
   }
 
-  initializeData() async {
+  initializeData(context) async {
     await Provider.of<ImagesProvider>(context, listen: false).fetchImages();
     await Provider.of<ImagesProvider>(context, listen: false).fetchTrendingImages('trending');
   }

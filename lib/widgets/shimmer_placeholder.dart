@@ -19,7 +19,7 @@ Widget buildShimmerEffect() {
     baseColor: Colors.grey[300]!,
     highlightColor: Colors.grey[100]!,
     child: Padding(
-      padding: const EdgeInsets.only(left: 16,right: 16),
+      padding: const EdgeInsets.only(left: 12,right: 12),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [

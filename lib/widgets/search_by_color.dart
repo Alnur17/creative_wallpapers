@@ -1,4 +1,4 @@
-import 'package:creative_wallpapers/screens/view_by_category.dart';
+import 'package:creative_wallpapers/screens/view_by_grid.dart';
 import 'package:flutter/material.dart';
 
 import '../constant/style.dart';
@@ -17,7 +17,7 @@ class SearchByColor extends StatelessWidget {
         Navigator.push(
           context,
           MaterialPageRoute(
-            builder: (context) =>  ViewByCategory(value: colorName),
+            builder: (context) =>  ViewByGrid(value: colorName),
           ),
         );
       },

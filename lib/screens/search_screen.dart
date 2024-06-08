@@ -1,5 +1,5 @@
 import 'package:creative_wallpapers/constant/color_palate.dart';
-import 'package:creative_wallpapers/screens/view_by_category.dart';
+import 'package:creative_wallpapers/screens/view_by_grid.dart';
 import 'package:creative_wallpapers/widgets/search_by_color.dart';
 import 'package:flutter/material.dart';
 
@@ -44,7 +44,7 @@ class SearchScreen extends StatelessWidget {
                           context,
                           MaterialPageRoute(
                               builder: (context) =>
-                                  ViewByCategory(value: searchController.text)),
+                                  ViewByGrid(value: searchController.text)),
                         );
                       },
                       child:  Padding(
