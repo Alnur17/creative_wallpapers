@@ -32,7 +32,10 @@ class _TrendingScreenState extends State<TrendingScreen> {
               children: [
                 Positioned.fill(
                   child: imagesProvider.isLoadingTrending
-                      ? const Center(child: CircularProgressIndicator())
+                      ? const Center(
+                          child: CircularProgressIndicator(
+                          color: textRed,
+                        ))
                       : CarouselSlider.builder(
                           itemCount: imagesProvider.trendImage.length,
                           options: CarouselOptions(

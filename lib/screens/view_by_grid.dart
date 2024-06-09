@@ -44,7 +44,8 @@ class _ViewByGridState extends State<ViewByGrid> {
   void _scrollListener() {
     if (_listController.position.pixels ==
         _listController.position.maxScrollExtent) {
-      Provider.of<ImagesProvider>(context, listen: false).fetchImagesByColorWhenScroll(widget.value);
+      Provider.of<ImagesProvider>(context, listen: false)
+          .fetchImagesByColorWhenScroll(widget.value);
     }
   }
 
@@ -63,19 +64,26 @@ class _ViewByGridState extends State<ViewByGrid> {
       ),
       body: Consumer<ImagesProvider>(builder: (context, imagesProvider, _) {
         if (imagesProvider.isLoadingSearch) {
-          return const Center(child: CircularProgressIndicator());
+          return const Center(
+            child: CircularProgressIndicator(
+              color: textRed,
+            ),
+          );
         } else if (imagesProvider.hasError) {
           return Center(
-            child: Text('Error: ${imagesProvider.errorMessage}', style: styleWB24),
+            child:
+                Text('Error: ${imagesProvider.errorMessage}', style: styleWB24),
           );
-        } else{
-          if(imagesProvider.searchImage.isNotEmpty){
+        } else {
+          if (imagesProvider.searchImage.isNotEmpty) {
             return RefreshIndicator(
+              backgroundColor: searchField,
+              color: textRed,
               onRefresh: () async {
                 return initializeData();
               },
               child: Padding(
-                padding: const EdgeInsets.only(left: 12, right: 12,bottom: 12),
+                padding: const EdgeInsets.only(left: 12, right: 12, bottom: 12),
                 child: GridView.builder(
                   gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
                     crossAxisCount: 2,
@@ -92,7 +100,8 @@ class _ViewByGridState extends State<ViewByGrid> {
                         MaterialPageRoute(
                           builder: (context) => FullImage(
                             imageUrl: imagesProvider.searchImage[index].fullUrl,
-                            altDescription: imagesProvider.searchImage[index].altDescription,
+                            altDescription: imagesProvider
+                                .searchImage[index].altDescription,
                             likes: imagesProvider.searchImage[index].likes,
                             height: imagesProvider.searchImage[index].height,
                             width: imagesProvider.searchImage[index].width,
@@ -104,8 +113,10 @@ class _ViewByGridState extends State<ViewByGrid> {
                         child: CachedNetworkImage(
                           imageUrl: imagesProvider.searchImage[index].thumbUrl,
                           fit: BoxFit.cover,
-                          placeholder: (context, url) => buildShimmerPlaceholder(),
-                          errorWidget: (context, url, error) => const Icon(Icons.error),
+                          placeholder: (context, url) =>
+                              buildShimmerPlaceholder(),
+                          errorWidget: (context, url, error) =>
+                              const Icon(Icons.error),
                         ),
                       ),
                     );
@@ -113,7 +124,7 @@ class _ViewByGridState extends State<ViewByGrid> {
                 ),
               ),
             );
-          }else{
+          } else {
             return const Center(
               child: Text(
                 'No Data Available',
@@ -125,5 +136,4 @@ class _ViewByGridState extends State<ViewByGrid> {
       }),
     );
   }
-
 }

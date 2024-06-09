@@ -131,6 +131,8 @@ class _HomeScreenState extends State<HomeScreen> {
             return buildShimmerEffect();
           } else {
             return RefreshIndicator(
+              backgroundColor: searchField,
+              color: textRed,
               onRefresh: () async {
                 return _refreshImages();
               },

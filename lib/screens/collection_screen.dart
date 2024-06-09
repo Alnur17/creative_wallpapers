@@ -68,7 +68,7 @@ class _CollectionScreenState extends State<CollectionScreen> {
         builder: (context, imagesProviders, _) {
           if (imagesProviders.isLoadingCollection &&
               imagesProviders.collectionImage.isEmpty) {
-            return const Center(child: CircularProgressIndicator());
+            return const Center(child: CircularProgressIndicator(color: textRed,));
           } else if (imagesProviders.hasError &&
               imagesProviders.collectionImage.isEmpty) {
             return Center(
@@ -79,6 +79,8 @@ class _CollectionScreenState extends State<CollectionScreen> {
             );
           } else {
             return RefreshIndicator(
+              backgroundColor: searchField,
+              color: textRed,
               onRefresh: () async {
                 await initializeData(context);
               },
