@@ -161,130 +161,128 @@ Future<void> handleApply(String image, BuildContext context) async {
       ),
       context: context,
       builder: (BuildContext context) {
-        return SizedBox(
-          height: 300,
-          child: Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 24),
-            child: Column(
-              children: [
-                const SizedBox(height: 40),
-                const Text(
-                  "What would you like to do?",
-                  style: TextStyle(
-                    fontSize: 20,
-                    fontWeight: FontWeight.w600,
+        return Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 24),
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              const SizedBox(height: 40),
+              const Text(
+                "What would you like to do?",
+                style: TextStyle(
+                  fontSize: 20,
+                  fontWeight: FontWeight.w600,
+                  color: textWhite,
+                ),
+              ),
+              const SizedBox(height: 30),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  const Icon(
+                    Icons.phone_android_sharp,
                     color: textWhite,
                   ),
-                ),
-                const SizedBox(height: 30),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    const Icon(
-                      Icons.phone_android_sharp,
-                      color: textWhite,
-                    ),
-                    const SizedBox(width: 12),
-                    InkWell(
-                      onTap: () async {
-                        Navigator.of(context).pop();
-                        // Set wallpaper for home screen
-                        await WallpaperManager.setWallpaperFromFile(
-                          file.path,
-                          WallpaperManager.HOME_SCREEN,
-                        );
-                        Fluttertoast.showToast(
-                          msg: "Wallpaper applied to Home Screen",
-                          toastLength: Toast.LENGTH_SHORT,
-                          gravity: ToastGravity.BOTTOM,
-                        );
-                      },
-                      child: const Text(
-                        'Set on home screen',
-                        style: TextStyle(
-                          fontSize: 16,
-                          fontWeight: FontWeight.w600,
-                          color: textWhite,
-                        ),
+                  const SizedBox(width: 12),
+                  InkWell(
+                    onTap: () async {
+                      Navigator.of(context).pop();
+                      // Set wallpaper for home screen
+                      await WallpaperManager.setWallpaperFromFile(
+                        file.path,
+                        WallpaperManager.HOME_SCREEN,
+                      );
+                      Fluttertoast.showToast(
+                        msg: "Wallpaper applied to Home Screen",
+                        toastLength: Toast.LENGTH_SHORT,
+                        gravity: ToastGravity.BOTTOM,
+                      );
+                    },
+                    child: const Text(
+                      'Set on home screen',
+                      style: TextStyle(
+                        fontSize: 16,
+                        fontWeight: FontWeight.w600,
+                        color: textWhite,
                       ),
                     ),
-                  ],
-                ),
-                const SizedBox(height: 12),
-                const Divider(height: 1),
-                const SizedBox(height: 16),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    const Icon(
-                      Icons.screen_lock_portrait_sharp,
-                      color: textWhite,
-                    ),
-                    const SizedBox(width: 12),
-                    InkWell(
-                      onTap: () async {
-                        Navigator.of(context).pop();
-                        // Set wallpaper for lock screen
-                        await WallpaperManager.setWallpaperFromFile(
-                          file.path,
-                          WallpaperManager.LOCK_SCREEN,
-                        );
-                        Fluttertoast.showToast(
-                          msg: "Wallpaper applied to Lock Screen",
-                          toastLength: Toast.LENGTH_SHORT,
-                          gravity: ToastGravity.BOTTOM,
-                        );
-                      },
-                      child: const Text(
-                        "Set on lock screen",
-                        style: TextStyle(
-                          fontSize: 16,
-                          fontWeight: FontWeight.w600,
-                          color: textWhite,
-                        ),
+                  ),
+                ],
+              ),
+              const SizedBox(height: 12),
+              const Divider(height: 1),
+              const SizedBox(height: 16),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  const Icon(
+                    Icons.screen_lock_portrait_sharp,
+                    color: textWhite,
+                  ),
+                  const SizedBox(width: 12),
+                  InkWell(
+                    onTap: () async {
+                      Navigator.of(context).pop();
+                      // Set wallpaper for lock screen
+                      await WallpaperManager.setWallpaperFromFile(
+                        file.path,
+                        WallpaperManager.LOCK_SCREEN,
+                      );
+                      Fluttertoast.showToast(
+                        msg: "Wallpaper applied to Lock Screen",
+                        toastLength: Toast.LENGTH_SHORT,
+                        gravity: ToastGravity.BOTTOM,
+                      );
+                    },
+                    child: const Text(
+                      "Set on lock screen",
+                      style: TextStyle(
+                        fontSize: 16,
+                        fontWeight: FontWeight.w600,
+                        color: textWhite,
                       ),
                     ),
-                  ],
-                ),
-                const SizedBox(height: 12),
-                const Divider(height: 1),
-                const SizedBox(height: 16),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    const Icon(
-                      Icons.phonelink_lock_sharp,
-                      color: textWhite,
-                    ),
-                    const SizedBox(width: 12),
-                    InkWell(
-                      onTap: () async {
-                        Navigator.of(context).pop();
-                        // Set wallpaper for both screens
-                        await WallpaperManager.setWallpaperFromFile(
-                          file.path,
-                          WallpaperManager.BOTH_SCREEN,
-                        );
-                        Fluttertoast.showToast(
-                          msg: "Wallpaper applied to both screens",
-                          toastLength: Toast.LENGTH_SHORT,
-                          gravity: ToastGravity.BOTTOM,
-                        );
-                      },
-                      child: const Text(
-                        'Set on both screen',
-                        style: TextStyle(
-                          fontSize: 16,
-                          fontWeight: FontWeight.w600,
-                          color: textWhite,
-                        ),
+                  ),
+                ],
+              ),
+              const SizedBox(height: 12),
+              const Divider(height: 1),
+              const SizedBox(height: 16),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  const Icon(
+                    Icons.phonelink_lock_sharp,
+                    color: textWhite,
+                  ),
+                  const SizedBox(width: 12),
+                  InkWell(
+                    onTap: () async {
+                      Navigator.of(context).pop();
+                      // Set wallpaper for both screens
+                      await WallpaperManager.setWallpaperFromFile(
+                        file.path,
+                        WallpaperManager.BOTH_SCREEN,
+                      );
+                      Fluttertoast.showToast(
+                        msg: "Wallpaper applied to both screens",
+                        toastLength: Toast.LENGTH_SHORT,
+                        gravity: ToastGravity.BOTTOM,
+                      );
+                    },
+                    child: const Text(
+                      'Set on both screen',
+                      style: TextStyle(
+                        fontSize: 16,
+                        fontWeight: FontWeight.w600,
+                        color: textWhite,
                       ),
                     ),
-                  ],
-                ),
-                const SizedBox(height: 12),
-              ],
-            ),
+                  ),
+                ],
+              ),
+              const SizedBox(height: 12),
+            ],
           ),
         );
       },
