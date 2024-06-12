@@ -53,9 +53,9 @@ class _HomeScreenState extends State<HomeScreen> {
     }
   }
 
-   _refreshImages() async {
+  _refreshImages() async {
     final provider = Provider.of<ImagesProvider>(context, listen: false);
-    await provider.loadMoreImages();
+    await provider.fetchImages();
   }
 
   @override
@@ -85,23 +85,22 @@ class _HomeScreenState extends State<HomeScreen> {
             ),
             const Spacer(),
             GestureDetector(
-              onTap: () {
-                Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                      builder: (context) => const ProfileScreen(),
-                    ));
-              },
-              child: _showGif
-                  ? Image.asset(
-                      'assets/icons/Settings.gif',
-                      width: 32,
-                    )
-                  : Image.asset(
-                'assets/icons/SettingsW.png',
-                width: 32,
-              )
-            ),
+                onTap: () {
+                  Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => const ProfileScreen(),
+                      ));
+                },
+                child: _showGif
+                    ? Image.asset(
+                        'assets/icons/Settings.gif',
+                        width: 32,
+                      )
+                    : Image.asset(
+                        'assets/icons/SettingsW.png',
+                        width: 32,
+                      )),
             const SizedBox(width: 16),
             GestureDetector(
               onTap: () {
@@ -143,68 +142,70 @@ class _HomeScreenState extends State<HomeScreen> {
                   children: [
                     const SizedBox(height: 12),
                     CarouselSlider(
-                      items: provider.images.map((entry) {
-                        return GestureDetector(
-                          onTap: () {
-                            Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                builder: (context) => FullImage(
-                                  imageUrl: entry.regularUrl,
-                                  altDescription: entry.altDescription,
-                                  likes: entry.likes,
-                                  height: entry.height,
-                                  width: entry.width,
+                      items: provider.images.map(
+                        (entry) {
+                          return GestureDetector(
+                            onTap: () {
+                              Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                  builder: (context) => FullImage(
+                                    imageUrl: entry.regularUrl,
+                                    altDescription: entry.altDescription,
+                                    likes: entry.likes,
+                                    height: entry.height,
+                                    width: entry.width,
+                                  ),
                                 ),
-                              ),
-                            );
-                          },
-                          child: Stack(
-                            alignment: Alignment.bottomCenter,
-                            children: [
-                              ClipRRect(
-                                borderRadius: BorderRadius.circular(12),
-                                child: CachedNetworkImage(
-                                  imageUrl: entry.thumbUrl,
-                                  placeholder: (context, url) =>
-                                      buildShimmerPlaceholder(),
-                                  errorWidget: (context, url, error) =>
-                                      const Icon(Icons.error),
-                                  fit: BoxFit.cover,
-                                  height: 200,
+                              );
+                            },
+                            child: Stack(
+                              alignment: Alignment.bottomCenter,
+                              children: [
+                                ClipRRect(
+                                  borderRadius: BorderRadius.circular(12),
+                                  child: CachedNetworkImage(
+                                    imageUrl: entry.thumbUrl,
+                                    placeholder: (context, url) =>
+                                        buildShimmerPlaceholder(),
+                                    errorWidget: (context, url, error) =>
+                                        const Icon(Icons.error),
+                                    fit: BoxFit.cover,
+                                    height: 200,
+                                    width: double.infinity,
+                                  ),
+                                ),
+                                Container(
+                                  height: 50,
                                   width: double.infinity,
-                                ),
-                              ),
-                              Container(
-                                height: 50,
-                                width: double.infinity,
-                                padding: const EdgeInsets.only(
-                                  left: 24,
-                                  right: 24,
-                                  top: 12,
-                                ),
-                                decoration: const BoxDecoration(
-                                  borderRadius: BorderRadius.only(
-                                    bottomLeft: Radius.circular(12),
-                                    bottomRight: Radius.circular(12),
+                                  padding: const EdgeInsets.only(
+                                    left: 24,
+                                    right: 24,
+                                    top: 12,
                                   ),
-                                  color: Colors.black54,
-                                ),
-                                child: Text(
-                                  capitalize(entry.altDescription),
-                                  style: const TextStyle(
-                                    color: textWhite,
-                                    fontSize: 14,
-                                    fontWeight: FontWeight.bold,
+                                  decoration: const BoxDecoration(
+                                    borderRadius: BorderRadius.only(
+                                      bottomLeft: Radius.circular(12),
+                                      bottomRight: Radius.circular(12),
+                                    ),
+                                    color: Colors.black54,
                                   ),
-                                  maxLines: 1,
-                                  overflow: TextOverflow.ellipsis,
+                                  child: Text(
+                                    capitalize(entry.altDescription),
+                                    style: const TextStyle(
+                                      color: textWhite,
+                                      fontSize: 14,
+                                      fontWeight: FontWeight.bold,
+                                    ),
+                                    maxLines: 1,
+                                    overflow: TextOverflow.ellipsis,
+                                  ),
                                 ),
-                              ),
-                            ],
-                          ),
-                        );
-                      }).toList(),
+                              ],
+                            ),
+                          );
+                        },
+                      ).toList(),
                       options: CarouselOptions(
                         autoPlay: true,
                         autoPlayCurve: Curves.fastOutSlowIn,
@@ -215,7 +216,8 @@ class _HomeScreenState extends State<HomeScreen> {
                       ),
                     ),
                     Padding(
-                      padding: const EdgeInsets.all(12),
+                      padding: const EdgeInsets.only(
+                          top: 16, bottom: 12, right: 12, left: 12),
                       child: GridView.builder(
                         primary: false,
                         shrinkWrap: true,
