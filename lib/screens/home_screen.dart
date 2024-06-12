@@ -9,7 +9,7 @@ import '../constant/style.dart';
 import '../data/all_data.dart';
 import '../provider/image_provider.dart';
 import '../screens/search_screen.dart';
-import '../widgets/full_image.dart';
+import 'full_image_screen.dart';
 import '../widgets/shimmer_placeholder.dart';
 
 class HomeScreen extends StatefulWidget {
@@ -53,9 +53,9 @@ class _HomeScreenState extends State<HomeScreen> {
     }
   }
 
-  void _refreshImages() async {
+   _refreshImages() async {
     final provider = Provider.of<ImagesProvider>(context, listen: false);
-    await provider.fetchImages();
+    await provider.loadMoreImages();
   }
 
   @override
@@ -134,7 +134,7 @@ class _HomeScreenState extends State<HomeScreen> {
               backgroundColor: searchField,
               color: textRed,
               onRefresh: () async {
-                return _refreshImages();
+                await _refreshImages();
               },
               child: SingleChildScrollView(
                 controller: _carouselController,

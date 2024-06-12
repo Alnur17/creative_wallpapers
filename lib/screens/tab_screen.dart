@@ -27,7 +27,6 @@ class _TabsScreenState extends State<TabsScreen> {
     const HomeScreen(),
     const TrendingScreen(),
     const Collections(),
-    //const SettingsScreen(),
   ];
 
   @override

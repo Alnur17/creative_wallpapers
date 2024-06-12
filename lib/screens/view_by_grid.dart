@@ -1,6 +1,6 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:creative_wallpapers/constant/color_palate.dart';
-import 'package:creative_wallpapers/widgets/full_image.dart';
+import 'package:creative_wallpapers/screens/full_image_screen.dart';
 import 'package:creative_wallpapers/widgets/shimmer_placeholder.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';

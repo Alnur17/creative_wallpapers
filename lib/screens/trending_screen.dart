@@ -1,6 +1,5 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:creative_wallpapers/constant/color_palate.dart';
-import 'package:creative_wallpapers/widgets/shimmer_placeholder.dart';
 import 'package:flutter/material.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:provider/provider.dart';
@@ -34,8 +33,9 @@ class _TrendingScreenState extends State<TrendingScreen> {
                   child: imagesProvider.isLoadingTrending
                       ? const Center(
                           child: CircularProgressIndicator(
-                          color: textRed,
-                        ))
+                            color: textRed,
+                          ),
+                        )
                       : CarouselSlider.builder(
                           itemCount: imagesProvider.trendImage.length,
                           options: CarouselOptions(
@@ -64,7 +64,10 @@ class _TrendingScreenState extends State<TrendingScreen> {
                               imageUrl: image.regularUrl,
                               fit: BoxFit.cover,
                               placeholder: (context, url) => const Center(
-                                  child: CircularProgressIndicator()),
+                                child: CircularProgressIndicator(
+                                  color: textRed,
+                                ),
+                              ),
                             );
                           },
                         ),
