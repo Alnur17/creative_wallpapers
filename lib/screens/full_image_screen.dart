@@ -57,7 +57,7 @@ class _FullImageState extends State<FullImage> {
               padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 16),
               decoration: BoxDecoration(
                 borderRadius: BorderRadius.circular(30),
-                color: Colors.black87,
+                color: Colors.black,
               ),
               child: Row(
                 children: [
@@ -104,7 +104,7 @@ class _FullImageState extends State<FullImage> {
 
   void _imageDetails(BuildContext context) {
     showModalBottomSheet(
-      backgroundColor: Colors.black54,
+      backgroundColor: Colors.black,
       shape: const RoundedRectangleBorder(
         borderRadius: BorderRadius.only(
           topLeft: Radius.circular(30),
@@ -113,12 +113,11 @@ class _FullImageState extends State<FullImage> {
       ),
       context: context,
       builder: (BuildContext context) {
-        return Container(
-          height: 300,
-          padding: const EdgeInsets.all(30),
+        return Padding(
+          padding: const EdgeInsets.only(top: 40,bottom: 40,left: 16,right: 16),
           child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
             crossAxisAlignment: CrossAxisAlignment.start,
+            mainAxisSize: MainAxisSize.min,
             children: [
               Text(
                 capitalize(widget.altDescription),
@@ -152,11 +151,11 @@ Future<void> handleApply(String image, BuildContext context) async {
   try {
     final file = await DefaultCacheManager().getSingleFile(image);
     showModalBottomSheet(
-      backgroundColor: Colors.black54,
+      backgroundColor: Colors.black,
       shape: const RoundedRectangleBorder(
         borderRadius: BorderRadius.only(
           topLeft: Radius.circular(24),
-          topRight: Radius.circular(24),
+       topRight: Radius.circular(24),
         ),
       ),
       context: context,
