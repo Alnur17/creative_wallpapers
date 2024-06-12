@@ -71,7 +71,7 @@ class _FullImageState extends State<FullImage> {
                       size: 30,
                     ),
                   ),
-                  const SizedBox(width: 24),
+                  const SizedBox(width: 30),
                   GestureDetector(
                     onTap: () {
                       handleApply(widget.imageUrl, context);
@@ -82,7 +82,7 @@ class _FullImageState extends State<FullImage> {
                       size: 30,
                     ),
                   ),
-                  const SizedBox(width: 24),
+                  const SizedBox(width: 30),
                   GestureDetector(
                     onTap: () {
                       _imageDetails(context);
